@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"skills": {
+		"Test-Driven Development (TDD)": {
+			"source": "obra/superpowers-skills",
+			"sourceType": "github",
+			"skillPath": "skills/testing/test-driven-development/SKILL.md",
+			"computedHash": "6ddfc058c51139a1304d2b0d2cfe03268c82138cc2c3c2bc6070cf37a9f8b2b2"
+		},
+		"executing-plans": {
+			"source": "obra/superpowers",
+			"sourceType": "github",
+			"skillPath": "skills/executing-plans/SKILL.md",
+			"computedHash": "08604f93f2e38dd3575e5503c79cda5c623c78a8df0e472457ac5ef7a33f22b8"
+		},
+		"finishing-a-development-branch": {
+			"source": "obra/superpowers",
+			"sourceType": "github",
+			"skillPath": "skills/finishing-a-development-branch/SKILL.md",
+			"computedHash": "aa2632ed96df59c36348bd8f8ec1ff0fb0c5cc68b60691834687bf4cedc6be3f"
+		},
+		"systematic-debugging": {
+			"source": "obra/superpowers",
+			"sourceType": "github",
+			"skillPath": "skills/systematic-debugging/SKILL.md",
+			"computedHash": "792a368e074981d7e3138edb439e138489b2ac247cd1e5739fab52af680fb17b"
+		},
+		"verification-before-completion": {
+			"source": "obra/superpowers",
+			"sourceType": "github",
+			"skillPath": "skills/verification-before-completion/SKILL.md",
+			"computedHash": "9b446f0c7fe1cfb560b1d34439523b1a76d5f177290007b2c053a1c749a4a8ba"
+		},
+		"writing-plans": {
+			"source": "obra/superpowers",
+			"sourceType": "github",
+			"skillPath": "skills/writing-plans/SKILL.md",
+			"computedHash": "b73b59d43c34c3fc225bfae419c458bb216af80df25fc0c545dfa7fd2a161722"
+		}
+	}
+}

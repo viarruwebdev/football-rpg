@@ -1,0 +1,6 @@
+pre-commit:
+  parallel: true
+  commands:
+    check: { run: pnpm check }
+    types: { run: pnpm type }
+    test:  { run: pnpm test }
