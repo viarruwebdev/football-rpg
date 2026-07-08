@@ -1,5 +1,5 @@
-import type { DuelInput, DuelSide, Lane } from '../../packages/core/src/index';
-import { makeRng, resolveDuel } from '../../packages/core/src/index';
+import type { DuelInput, DuelSide, Lane, ShotInput } from '../../packages/core/src/index';
+import { makeRng, resolveDuel, resolveShot } from '../../packages/core/src/index';
 import { splitN } from '../../packages/core/src/rng/splitN';
 
 const SAMPLE_SIZE = 10_000;
@@ -166,10 +166,84 @@ function measureWeights(): { rng: number; lane: number; attribute: number } {
 	};
 }
 
+const SHOT_SAMPLE_SIZE = 50_000;
+const SHOT_GOAL_SEGMENTS = new Set(['unstoppableGoal', 'goal', 'goalOnRebound']);
+
+interface ShotCalibrationBand {
+	label: string;
+	finishing: number;
+	reflexes: number;
+	min: number;
+	max: number;
+	blocking: boolean;
+	note?: string;
+}
+
+// ADR-0002: banda 40-55% es tasa AGREGADA sobre partidos completos, no de matchup extremo.
+// F18/R9: matchup extremo, banda revisada 80-85% (consistente con duelo mismo matchup).
+// F15/R12: matchup equilibrado, alerta temprana antes de simulacion completa.
+const SHOT_CALIBRATION_BANDS: ShotCalibrationBand[] = [
+	{
+		label: 'extremo   — elite (F18) vs mediocre (R9)',
+		finishing: 18,
+		reflexes: 9,
+		min: 0.75,
+		max: 0.9,
+		blocking: true,
+		note: 'ADR-0002: banda revisada 80-85%; 40-55% es tasa agregada, no de matchup extremo',
+	},
+	{
+		label: 'equilibrado — bueno (F15) vs competente (R12)',
+		finishing: 15,
+		reflexes: 12,
+		min: 0.5,
+		max: 0.75,
+		blocking: true,
+		note: 'alerta temprana; banda [50-75%] provisional, definitiva pendiente de simulacion completa',
+	},
+];
+
+function shotGoalRate(finishing: number, reflexes: number): number {
+	const input: ShotInput = {
+		shooter: { cardPower: 2, attribute: finishing, modifiers: [], composure: 12 },
+		keeper: { cardPower: 2, attribute: reflexes, modifiers: [], composure: 10 },
+		modifierContext: {
+			hasAssist: false,
+			isHeaderAfterCross: false,
+			hadForcedAdvance: false,
+			shotZone: 'area',
+			isLateralAngle: false,
+			longShotsAttribute: 1,
+		},
+	};
+	let goals = 0;
+	for (let i = 0; i < SHOT_SAMPLE_SIZE; i++) {
+		const { segment } = resolveShot(input, makeRng(i));
+		if (SHOT_GOAL_SEGMENTS.has(segment)) goals++;
+	}
+	return goals / SHOT_SAMPLE_SIZE;
+}
+
 function main(): void {
 	let hasFailure = false;
 
-	console.log('=== CE-002: calibracion de tasas de exito ===\n');
+	console.log('=== CE-002 shot: calibracion de tasa de gol por remate (ADR-0002) ===\n');
+	for (const band of SHOT_CALIBRATION_BANDS) {
+		const rate = shotGoalRate(band.finishing, band.reflexes);
+		const inBand = rate >= band.min && rate <= band.max;
+		if (!inBand && band.blocking) hasFailure = true;
+		const status = inBand
+			? 'OK'
+			: band.blocking
+				? 'FUERA DE BANDA'
+				: 'fuera de banda (no bloqueante)';
+		console.log(
+			`${band.label}: ${(rate * 100).toFixed(2)}% (banda [${band.min * 100}-${band.max * 100}]%) -> ${status}`,
+		);
+		if (band.note) console.log(`  nota: ${band.note}`);
+	}
+
+	console.log('\n=== CE-002 duel: calibracion de tasas de exito ===\n');
 	for (const band of CALIBRATION_BANDS) {
 		const rate = successRate(band.attackAttribute, band.defenseAttribute);
 		const inBand = rate >= band.min && rate <= band.max;

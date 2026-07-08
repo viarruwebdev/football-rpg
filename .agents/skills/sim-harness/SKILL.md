@@ -78,6 +78,7 @@ pnpm sim -- --seed 777   # otra semilla maestra (las tasas deben ser estables en
 - **Fuera de banda tras un cambio de reglas:** el cambio alteró el balance. Decide: (a) era intencional → actualiza la banda y documéntalo como ADR; (b) no era intencional → revísalo.
 - **Tasas que oscilan mucho entre semillas:** N demasiado bajo (sube iteraciones) o hay no-determinismo colándose (revisa con la skill `core-determinism-guard`).
 - **Un componente supera ~33% de peso:** el equilibrio decisión/preparación/azar se rompió; revisa mods, banda de incertidumbre o potencia de cartas.
+- Los objetivos de calibración deben especificar si son por-matchup o agregados; un matchup extremo no se mide contra una banda agregada
 
 ## Extensiones útiles
 

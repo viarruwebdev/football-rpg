@@ -1,0 +1,76 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`resolveShot golden replay (T012) > elite keeper scenario — seed 300 (expect greatSave or solidSave bias) 1`] = `
+{
+  "events": [
+    {
+      "type": "counterattackSave",
+    },
+  ],
+  "result": -7,
+  "segment": "counterattackSave",
+}
+`;
+
+exports[`resolveShot golden replay (T012) > elite shooter vs mediocre keeper — seed 100 1`] = `
+{
+  "events": [
+    {
+      "type": "goal",
+    },
+    {
+      "cause": "goal",
+      "side": "attack",
+      "type": "momentum",
+    },
+  ],
+  "result": 3,
+  "segment": "goal",
+}
+`;
+
+exports[`resolveShot golden replay (T012) > shot with assist — seed 200 1`] = `
+{
+  "events": [
+    {
+      "type": "goal",
+    },
+    {
+      "cause": "goal",
+      "side": "attack",
+      "type": "momentum",
+    },
+  ],
+  "result": 12,
+  "segment": "unstoppableGoal",
+}
+`;
+
+exports[`resolveShot golden replay (T012) > weak shooter vs elite keeper — seed 500 1`] = `
+{
+  "events": [
+    {
+      "type": "counterattackSave",
+    },
+  ],
+  "result": -10,
+  "segment": "counterattackSave",
+}
+`;
+
+exports[`resolveShot golden replay (T012) > zero differential — seed 400 1`] = `
+{
+  "events": [
+    {
+      "type": "goalOnRebound",
+    },
+    {
+      "cause": "goalOnRebound",
+      "side": "attack",
+      "type": "momentum",
+    },
+  ],
+  "result": 2,
+  "segment": "goalOnRebound",
+}
+`;
