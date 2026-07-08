@@ -139,6 +139,7 @@ Este repo usa **GitHub Spec Kit**. El flujo por feature es:
 - No meter ESLint/Prettier (usamos Biome) ni Next.js (no hay servidor que justifique).
 - No implementar el juego entero de una vez: v1 = **una temporada jugable** con ~50-70 cartas. El resto es incremental.
 - No generar este archivo con un LLM: se mantiene a mano (los archivos de contexto auto-generados envejecen mal).
+- No escribir código escrito en español. Todo el código va en inglés.
 
 ## 11. Referencias
 

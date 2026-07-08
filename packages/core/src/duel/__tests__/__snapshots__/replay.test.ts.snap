@@ -1,0 +1,1219 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay.test.ts.snap > both sides have a special technique (fixed +-4 band, ignores differential and composure) 1`] = `
+{
+  "events": [
+    {
+      "side": "attack",
+      "type": "advance",
+    },
+  ],
+  "result": 3,
+  "segment": "cleanSuccess",
+}
+`;
+
+exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay.test.ts.snap > devastating counter scenario (strong defender, weak attacker) 1`] = `
+{
+  "events": [
+    {
+      "type": "transition",
+    },
+    {
+      "side": "defense",
+      "type": "cardSteal",
+    },
+    {
+      "delta": 2,
+      "side": "defense",
+      "type": "momentum",
+    },
+  ],
+  "result": -27,
+  "segment": "devastatingCounter",
+}
+`;
+
+exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay.test.ts.snap > elite attacker vs poor defender, lane hit 1`] = `
+{
+  "events": [
+    {
+      "side": "attack",
+      "type": "advance",
+    },
+    {
+      "side": "attack",
+      "type": "cardSteal",
+    },
+    {
+      "delta": 1,
+      "side": "attack",
+      "type": "momentum",
+    },
+  ],
+  "result": 13,
+  "segment": "crushingSuccess",
+}
+`;
+
+exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay.test.ts.snap > elite attacker vs poor defender, lane miss 1`] = `
+{
+  "events": [
+    {
+      "side": "attack",
+      "type": "advance",
+    },
+    {
+      "side": "attack",
+      "type": "cardSteal",
+    },
+    {
+      "delta": 1,
+      "side": "attack",
+      "type": "momentum",
+    },
+  ],
+  "result": 16,
+  "segment": "crushingSuccess",
+}
+`;
+
+exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay.test.ts.snap > empty modifiers on both sides (no situational mods) 1`] = `
+{
+  "events": [
+    {
+      "type": "transition",
+    },
+    {
+      "delta": 1,
+      "side": "defense",
+      "type": "momentum",
+    },
+  ],
+  "result": -5,
+  "segment": "disadvantagedLoss",
+}
+`;
+
+exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay.test.ts.snap > evenly matched sides (good vs good, same attribute and composure) 1`] = `
+{
+  "events": [
+    {
+      "type": "transition",
+    },
+  ],
+  "result": -1,
+  "segment": "simpleLoss",
+}
+`;
+
+exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay.test.ts.snap > extreme composure (>=18) narrows the band and high composure defender is stable 1`] = `
+{
+  "events": [
+    {
+      "type": "transition",
+    },
+    {
+      "delta": 1,
+      "side": "defense",
+      "type": "momentum",
+    },
+  ],
+  "result": -5,
+  "segment": "disadvantagedLoss",
+}
+`;
+
+exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay.test.ts.snap > extreme diminishing-returns modifiers on both sides (large raw totals) 1`] = `
+{
+  "events": [
+    {
+      "side": "attack",
+      "type": "advance",
+    },
+    {
+      "side": "attack",
+      "type": "cardSteal",
+    },
+    {
+      "delta": 1,
+      "side": "attack",
+      "type": "momentum",
+    },
+  ],
+  "result": 34,
+  "segment": "crushingSuccess",
+}
+`;
+
+exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay.test.ts.snap > low composure (<8) widens the band under an even matchup 1`] = `
+{
+  "events": [
+    {
+      "type": "transition",
+    },
+    {
+      "side": "defense",
+      "type": "cardSteal",
+    },
+    {
+      "delta": 2,
+      "side": "defense",
+      "type": "momentum",
+    },
+  ],
+  "result": -7,
+  "segment": "devastatingCounter",
+}
+`;
+
+exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay.test.ts.snap > only the attacker has a special technique (no fixed band, follows the normal pipeline) 1`] = `
+{
+  "events": [
+    {
+      "side": "attack",
+      "type": "advance",
+    },
+    {
+      "delta": 1,
+      "type": "pressure",
+    },
+  ],
+  "result": 1,
+  "segment": "forcedAdvance",
+}
+`;
+
+exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay.test.ts.snap > replays 50 seeded duels deterministically 1`] = `
+[
+  {
+    "events": [
+      {
+        "type": "transition",
+      },
+    ],
+    "result": -1,
+    "segment": "simpleLoss",
+  },
+  {
+    "events": [
+      {
+        "type": "transition",
+      },
+    ],
+    "result": -2,
+    "segment": "simpleLoss",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 6,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "delta": 1,
+        "type": "pressure",
+      },
+    ],
+    "result": 2,
+    "segment": "forcedAdvance",
+  },
+  {
+    "events": [
+      {
+        "type": "transition",
+      },
+    ],
+    "result": -1,
+    "segment": "simpleLoss",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "delta": 1,
+        "type": "pressure",
+      },
+    ],
+    "result": 1,
+    "segment": "forcedAdvance",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+    ],
+    "result": 3,
+    "segment": "cleanSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 8,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 8,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+    ],
+    "result": 3,
+    "segment": "cleanSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 9,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 11,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "type": "transition",
+      },
+    ],
+    "result": -2,
+    "segment": "simpleLoss",
+  },
+  {
+    "events": [
+      {
+        "type": "transition",
+      },
+      {
+        "delta": 1,
+        "side": "defense",
+        "type": "momentum",
+      },
+    ],
+    "result": -3,
+    "segment": "disadvantagedLoss",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+    ],
+    "result": 5,
+    "segment": "cleanSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "delta": 1,
+        "type": "pressure",
+      },
+    ],
+    "result": 2,
+    "segment": "forcedAdvance",
+  },
+  {
+    "events": [
+      {
+        "type": "transition",
+      },
+    ],
+    "result": -1,
+    "segment": "simpleLoss",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "delta": 1,
+        "type": "pressure",
+      },
+    ],
+    "result": 1,
+    "segment": "forcedAdvance",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+    ],
+    "result": 3,
+    "segment": "cleanSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 8,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 8,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+    ],
+    "result": 4,
+    "segment": "cleanSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 9,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 11,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "type": "transition",
+      },
+    ],
+    "result": -2,
+    "segment": "simpleLoss",
+  },
+  {
+    "events": [
+      {
+        "type": "transition",
+      },
+      {
+        "delta": 1,
+        "side": "defense",
+        "type": "momentum",
+      },
+    ],
+    "result": -3,
+    "segment": "disadvantagedLoss",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+    ],
+    "result": 5,
+    "segment": "cleanSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "delta": 1,
+        "type": "pressure",
+      },
+    ],
+    "result": 1,
+    "segment": "forcedAdvance",
+  },
+  {
+    "events": [
+      {
+        "type": "transition",
+      },
+    ],
+    "result": -2,
+    "segment": "simpleLoss",
+  },
+  {
+    "events": [
+      {
+        "type": "miniDuel",
+      },
+    ],
+    "result": 0,
+    "segment": "splitBall",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+    ],
+    "result": 3,
+    "segment": "cleanSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 8,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 8,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+    ],
+    "result": 4,
+    "segment": "cleanSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 9,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 11,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "type": "transition",
+      },
+    ],
+    "result": -1,
+    "segment": "simpleLoss",
+  },
+  {
+    "events": [
+      {
+        "type": "transition",
+      },
+    ],
+    "result": -2,
+    "segment": "simpleLoss",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 6,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "delta": 1,
+        "type": "pressure",
+      },
+    ],
+    "result": 1,
+    "segment": "forcedAdvance",
+  },
+  {
+    "events": [
+      {
+        "type": "transition",
+      },
+    ],
+    "result": -2,
+    "segment": "simpleLoss",
+  },
+  {
+    "events": [
+      {
+        "type": "miniDuel",
+      },
+    ],
+    "result": 0,
+    "segment": "splitBall",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "delta": 1,
+        "type": "pressure",
+      },
+    ],
+    "result": 2,
+    "segment": "forcedAdvance",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 7,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 7,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+    ],
+    "result": 4,
+    "segment": "cleanSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 9,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 11,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "type": "transition",
+      },
+    ],
+    "result": -1,
+    "segment": "simpleLoss",
+  },
+  {
+    "events": [
+      {
+        "type": "transition",
+      },
+    ],
+    "result": -2,
+    "segment": "simpleLoss",
+  },
+]
+`;
+
+exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay.test.ts.snap > replays a fixed sequence of 20 more seeded duels (different generator, wider index range) 1`] = `
+[
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 12,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 7,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 14,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 16,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "delta": 1,
+        "type": "pressure",
+      },
+    ],
+    "result": 2,
+    "segment": "forcedAdvance",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "delta": 1,
+        "type": "pressure",
+      },
+    ],
+    "result": 1,
+    "segment": "forcedAdvance",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 9,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+    ],
+    "result": 4,
+    "segment": "cleanSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "delta": 1,
+        "type": "pressure",
+      },
+    ],
+    "result": 1,
+    "segment": "forcedAdvance",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+    ],
+    "result": 3,
+    "segment": "cleanSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 7,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 13,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 12,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 7,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 14,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 16,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "delta": 1,
+        "type": "pressure",
+      },
+    ],
+    "result": 2,
+    "segment": "forcedAdvance",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "delta": 1,
+        "type": "pressure",
+      },
+    ],
+    "result": 1,
+    "segment": "forcedAdvance",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+      {
+        "side": "attack",
+        "type": "cardSteal",
+      },
+      {
+        "delta": 1,
+        "side": "attack",
+        "type": "momentum",
+      },
+    ],
+    "result": 9,
+    "segment": "crushingSuccess",
+  },
+  {
+    "events": [
+      {
+        "side": "attack",
+        "type": "advance",
+      },
+    ],
+    "result": 5,
+    "segment": "cleanSuccess",
+  },
+]
+`;
+
+exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay.test.ts.snap > split ball scenario, seed 48 lands on an exact zero result 1`] = `
+{
+  "events": [
+    {
+      "type": "miniDuel",
+    },
+  ],
+  "result": 0,
+  "segment": "splitBall",
+}
+`;
