@@ -10,3 +10,11 @@ export type {
 export { resolveDuel } from './duel';
 export type { Rng } from './rng';
 export { makeRng } from './rng';
+export type {
+	ShotEvent,
+	ShotInput,
+	ShotModifierContext,
+	ShotResult,
+	ShotSegment,
+} from './shot';
+export { resolveShot } from './shot';
