@@ -47,7 +47,7 @@ Característica: Resolución de un duelo de eslabón normal
   Escenario: la banda se ensancha con ventaja grande
     Dado una diferencia de fuerza efectiva de 7 o más antes del azar
     Cuando determino la banda de incertidumbre
-    Entonces la banda es ±8
+    Entonces la banda es ±12
 
   Esquema del escenario: cada resultado cae en exactamente un tramo
     Dado un Resultado numérico de <resultado>

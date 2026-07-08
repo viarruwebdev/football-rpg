@@ -146,8 +146,8 @@ describeFeature(feature, ({ Background, Scenario, ScenarioOutline }) => {
 			// computed in Then
 		});
 
-		Then('la banda es ±8', () => {
-			expect(computeBand(7, 12, false)).toBe(8);
+		Then('la banda es ±12', () => {
+			expect(computeBand(7, 12, false)).toBe(12);
 		});
 	});
 

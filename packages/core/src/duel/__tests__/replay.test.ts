@@ -240,7 +240,7 @@ describe('golden replay — packages/core/src/duel/__tests__/__snapshots__/repla
 		expect(resolveDuel(input, makeRng(7))).toMatchSnapshot();
 	});
 
-	it('split ball scenario, seed 48 lands on an exact zero result', () => {
+	it('split ball scenario, seed 13 lands on an exact zero result', () => {
 		const input: DuelInput = {
 			attack: {
 				cardPower: 2,
@@ -257,7 +257,7 @@ describe('golden replay — packages/core/src/duel/__tests__/__snapshots__/repla
 				composure: 12,
 			},
 		};
-		const result = resolveDuel(input, makeRng(48));
+		const result = resolveDuel(input, makeRng(13));
 		expect(result.result).toBe(0);
 		expect(result.segment).toBe('splitBall');
 		expect(result).toMatchSnapshot();

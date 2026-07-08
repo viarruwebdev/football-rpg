@@ -42,14 +42,14 @@ describe('resolveDuel lane isolation (US3)', () => {
 		expect(Math.abs(missed.result - hit.result)).toBeGreaterThanOrEqual(2);
 	});
 
-	it('with a seed producing zero uncertainty, the swing is exactly 3', () => {
+	it('with a seed producing matching uncertainty draws, the swing is exactly 3', () => {
 		const missed = resolveDuel(
 			{ ...baseInput(), defense: { ...baseInput().defense, bettedLane: 'left' } },
-			makeRng(35),
+			makeRng(2),
 		);
 		const hit = resolveDuel(
 			{ ...baseInput(), defense: { ...baseInput().defense, bettedLane: 'right' } },
-			makeRng(35),
+			makeRng(2),
 		);
 		expect(hit.result - missed.result).toBe(-3);
 	});

@@ -4,12 +4,12 @@ import { computeBand, sampleTriangular } from '../uncertainty';
 
 describe('computeBand', () => {
 	it.each([
-		[0, 11, false, 6],
-		[4, 11, false, 6],
-		[5, 11, false, 7],
-		[6, 11, false, 7],
-		[7, 11, false, 8],
-		[10, 11, false, 8],
+		[0, 11, false, 10],
+		[4, 11, false, 10],
+		[5, 11, false, 11],
+		[6, 11, false, 11],
+		[7, 11, false, 12],
+		[10, 11, false, 12],
 	])('dynamic band for |diff|=%i and neutral composure -> %i', (diff, composure, special, expected) => {
 		expect(computeBand(diff, composure, special)).toBe(expected);
 	});
@@ -25,7 +25,7 @@ describe('computeBand', () => {
 		[1, 1],
 	])('composure %i applies adjustment %i to base band', (composure, adjustment) => {
 		const base = computeBand(0, composure, false);
-		expect(base).toBe(Math.max(6 + adjustment, 3));
+		expect(base).toBe(Math.max(10 + adjustment, 3));
 	});
 
 	it('never goes below the floor of 3', () => {

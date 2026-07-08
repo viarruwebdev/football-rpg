@@ -31,16 +31,16 @@ describe('resolveDuel', () => {
 		expect(a).toEqual(b);
 	});
 
-	it('lane effect swings the result by 3 points (+2 hit vs -1 miss) when uncertainty is 0', () => {
-		// seed 35 yields sampleTriangular(band, rng.split()) === 0 for the bands
-		// this input produces on both branches, isolating the pure lane effect.
+	it('lane effect swings the result by 3 points (+2 hit vs -1 miss) when the seed happens to cancel out', () => {
+		// seed 2 yields identical uncertainty draws on both branches for the
+		// bands this input produces, isolating the pure lane effect.
 		const missed = resolveDuel(
 			{ ...baseInput(), defense: { ...baseInput().defense, bettedLane: 'left' } },
-			makeRng(35),
+			makeRng(2),
 		);
 		const hit = resolveDuel(
 			{ ...baseInput(), defense: { ...baseInput().defense, bettedLane: 'right' } },
-			makeRng(35),
+			makeRng(2),
 		);
 		expect(hit.result - missed.result).toBe(-3);
 	});

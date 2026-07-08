@@ -147,8 +147,10 @@ describe('resolveDuel calibration (CE-002)', () => {
 		expect(rate).toBeLessThanOrEqual(0.85);
 	});
 
-	it('elite attacker (18) beats poor defender (4) 90-95% of the time', () => {
-		const rate = successRate(18, 4);
+	it('elite attacker (18) beats poor defender (3) 90-95% of the time', () => {
+		// attribute 3 -> influence -4 ("poor"), matching the sim-harness table;
+		// attribute 4 would give influence -3, a different (less extreme) matchup.
+		const rate = successRate(18, 3);
 		expect(rate).toBeGreaterThanOrEqual(0.9);
 		expect(rate).toBeLessThanOrEqual(0.95);
 	});

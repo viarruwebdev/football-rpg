@@ -25,10 +25,11 @@ No había incógnitas bloqueantes (el usuario fijó el patrón de Rng y la spec 
 
 ## R-002 — Distribución triangular discreta
 
-**Decisión**: muestreo por suma de dos uniformes en `[−banda, +banda]` dividida a la mitad, redondeada al entero más cercano.
+**Decisión**: muestreo por suma de dos uniformes en `[−banda, +banda]` dividida a la mitad, redondeada al entero más cercano. **Las dos uniformes deben provenir de dos generadores `Rng` hijos independientes (`rng.split()`), nunca de dos llamadas a `next()` sobre el mismo `rng`** — ver [ADR-0001](./adr/0001-recalibrar-banda-dinamica.md).
 
 **Razonamiento**:
-- La suma de dos uniformes produce una distribución triangular. Con dos llamadas a `rng.next()` escaladas a `[−banda, +banda]`, la suma dividida entre dos produce el triángulo centrado en 0 con soporte `[−banda, +banda]`.
+- La suma de dos uniformes produce una distribución triangular. Con dos muestras independientes escaladas a `[−banda, +banda]`, la suma dividida entre dos produce el triángulo centrado en 0 con soporte `[−banda, +banda]`.
+- El `Rng` es inmutable por diseño (T011): `rng.next()` llamado dos veces sobre la misma instancia siempre devuelve el mismo valor. Por eso las dos uniformes exigen dos hijos distintos vía `split()`, no dos `next()` seguidos — la redacción original de esta decisión no lo advertía explícitamente y esa omisión llevó a una implementación con bug (ver ADR-0001).
 - El redondeo al entero convierte el continuo en los valores discretos que usa la tabla.
 - Sencillo de testear (fast-check verifica suelo mínimo y soporte).
 

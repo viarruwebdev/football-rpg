@@ -21,9 +21,11 @@ const CALIBRATION_BANDS: CalibrationBand[] = [
 		max: 0.85,
 	},
 	{
-		label: 'elite (18) vs poor (4)',
+		// attribute 3 -> influence -4 ("poor"), matching the sim-harness table;
+		// attribute 4 gives influence -3, a different (less extreme) matchup.
+		label: 'elite (18) vs poor (3)',
 		attackAttribute: 18,
-		defenseAttribute: 4,
+		defenseAttribute: 3,
 		min: 0.9,
 		max: 0.95,
 	},
@@ -184,7 +186,7 @@ function main(): void {
 		'medicion usa descomposicion de varianza aislando un factor a la vez, lo cual sobre-pesa',
 	);
 	console.log(
-		'el azar frente al carril (swing fijo de 3 puntos vs banda +-6..+-8). La medicion correcta',
+		'el azar frente al carril (swing fijo de 3 puntos vs banda +-10..+-12, ADR-0001). La medicion',
 	);
 	console.log(
 		'requiere contribucion marginal sobre duelos reales con todos los factores variando a la',

@@ -157,9 +157,11 @@ La banda la calcula `computeBand(diferencial, composureAtacante, tecnicaEspecial
 
 | Diferencia efectiva `|diferencial|` | Banda base |
 |--------------------------------------|-----------|
-| 0-4 | ±6 |
-| 5-6 | ±7 |
-| 7+ | ±8 |
+| 0-4 | ±10 |
+| 5-6 | ±11 |
+| 7+ | ±12 |
+
+> Valores recalibrados en [ADR-0001](./adr/0001-recalibrar-banda-dinamica.md). Los originales (±6/±7/±8) estaban calibrados contra una implementación con bug en `sampleTriangular` que colapsaba la distribución triangular a una distribución degenerada de mayor varianza.
 
 **Ajuste por Composure del atacante**:
 
