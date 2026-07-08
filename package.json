@@ -5,9 +5,9 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "tsc --noEmit && vite build",
+		"build": "tsc --build && vite build",
 		"preview": "vite preview",
-		"type": "tsc --noEmit",
+		"type": "tsc --build --force",
 		"check": "biome check --write .",
 		"lint": "biome lint .",
 		"format": "biome format --write .",

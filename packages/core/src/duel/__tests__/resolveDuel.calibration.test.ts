@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { makeRng } from '../../rng';
+import { splitN } from '../../rng/splitN';
 import { resolveDuel } from '../resolveDuel';
 import type { DuelInput, DuelSide, Lane } from '../types';
 
@@ -17,9 +18,11 @@ function successRate(attackerAttribute: number, defenderAttribute: number): numb
 	let successes = 0;
 	for (let i = 0; i < SAMPLE_SIZE; i++) {
 		const rng = makeRng(i);
-		const laneRng = rng.split();
-		const chosenLane = LANES[Math.floor(laneRng.next() * LANES.length)] ?? 'center';
-		const bettedLane = LANES[Math.floor(laneRng.split().next() * LANES.length)] ?? 'center';
+		const [chosenLaneRng, bettedLaneRng] = splitN(rng, 2);
+		const chosenLane =
+			LANES[Math.floor((chosenLaneRng?.next() ?? 0) * LANES.length)] ?? 'center';
+		const bettedLane =
+			LANES[Math.floor((bettedLaneRng?.next() ?? 0) * LANES.length)] ?? 'center';
 		const input: DuelInput = {
 			attack: { ...makeSide(attackerAttribute, 2, 12), chosenLane },
 			defense: { ...makeSide(defenderAttribute, 2, 12), bettedLane },
@@ -104,13 +107,14 @@ describe('resolveDuel weight balance (CE-003)', () => {
 					resolveWith(refAttackAttr, refDefenseAttr, chosenLane, bettedLane, makeRng(r)),
 				);
 			}
-			for (const [atk, def] of [
+			const attributePairs: Array<[number, number]> = [
 				[4, 4],
 				[9, 9],
 				[14, 14],
 				[18, 18],
 				[20, 1],
-			]) {
+			];
+			for (const [atk, def] of attributePairs) {
 				attributesOnly.push(
 					resolveWith(atk, def, refChosenLane, refBettedLane, makeRng(r)),
 				);

@@ -1,5 +1,6 @@
 import type { DuelInput, DuelSide, Lane } from '../../packages/core/src/index';
 import { makeRng, resolveDuel } from '../../packages/core/src/index';
+import { splitN } from '../../packages/core/src/rng/splitN';
 
 const SAMPLE_SIZE = 10_000;
 const LANES: Lane[] = ['left', 'center', 'right'];
@@ -62,9 +63,9 @@ function successRate(attackAttribute: number, defenseAttribute: number): number 
 	let successes = 0;
 	for (let i = 0; i < SAMPLE_SIZE; i++) {
 		const rng = makeRng(i);
-		const laneRng = rng.split();
-		const chosenLane = randomLane(laneRng);
-		const bettedLane = randomLane(laneRng.split());
+		const [chosenLaneRng, bettedLaneRng] = splitN(rng, 2);
+		const chosenLane = chosenLaneRng ? randomLane(chosenLaneRng) : 'center';
+		const bettedLane = bettedLaneRng ? randomLane(bettedLaneRng) : 'center';
 		const input: DuelInput = {
 			attack: { ...makeSide(attackAttribute), chosenLane },
 			defense: { ...makeSide(defenseAttribute), bettedLane },
@@ -137,13 +138,14 @@ function measureWeights(): { rng: number; lane: number; attribute: number } {
 				resolveWith(refAttackAttr, refDefenseAttr, chosenLane, bettedLane, makeRng(r)),
 			);
 		}
-		for (const [atk, def] of [
+		const attributePairs: Array<[number, number]> = [
 			[4, 4],
 			[9, 9],
 			[14, 14],
 			[18, 18],
 			[20, 1],
-		]) {
+		];
+		for (const [atk, def] of attributePairs) {
 			attributesOnly.push(resolveWith(atk, def, refChosenLane, refBettedLane, makeRng(r)));
 		}
 

@@ -76,12 +76,27 @@ todos caen en 45.0-45.2% para bueno/bueno, sin oscilar fuera de banda).
 
 - `dynamicBand()` en `packages/core/src/duel/uncertainty.ts` pasa de
   `6/7/8` a `10/11/12`.
-- El suelo mínimo de banda (`BAND_FLOOR = 3`, CE-004) y la banda fija de
-  técnica especial (`SPECIAL_TECHNIQUE_BAND = 4`) no cambian — no forman
+- El suelo mínimo de banda (`BAND_FLOOR = 3`, CE-004) no cambia — no forma
   parte de este ajuste.
-- `specs/001-resolvedor-duelos/data-model.md` y
-  `specs/001-resolvedor-duelos/contracts/resolverDuelo.md` deben actualizarse
-  para reflejar los nuevos valores de banda dinámica.
+- **`SPECIAL_TECHNIQUE_BAND = 4` tampoco cambia, pero su relación con la
+  banda normal sí**: antes de este ajuste la banda de técnica especial (4)
+  era ~0.5-0.67× la banda normal (6-8); tras la recalibración es ~0.33-0.4×
+  (4 vs 10-12) — el caso "ambos lados traen técnica especial" quedó
+  proporcionalmente mucho más determinista (menos incertidumbre relativa) de
+  lo que era antes. No se ha verificado si esta certeza relativa más alta
+  sigue siendo el resultado de diseño deseado, porque el catálogo de
+  técnicas especiales está fuera de alcance de la feature 001 (solo existe
+  el punto de extensión, sin datos reales que lo ejerciten). **Revisar este
+  punto cuando se implemente el catálogo de técnicas especiales**: puede que
+  `SPECIAL_TECHNIQUE_BAND` necesite su propia recalibración, o un test de
+  calibración dedicado a ese camino (no solo el test unitario actual que
+  verifica el valor numérico crudo).
+- `specs/001-resolvedor-duelos/data-model.md`,
+  `specs/001-resolvedor-duelos/contracts/resolverDuelo.md`,
+  `specs/001-resolvedor-duelos/spec.md`,
+  `specs/001-resolvedor-duelos/tasks.md` (T019) y
+  `specs/001-resolvedor-duelos/checklists/requirements.md` (CHK011, CHK028)
+  se actualizaron para reflejar los nuevos valores de banda dinámica.
 - `pnpm sim` y los tests de calibración
   (`resolveDuel.calibration.test.ts`) deben re-verificarse en verde con los
   nuevos valores.

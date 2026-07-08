@@ -19,8 +19,10 @@ describe('computeBand floor (CE-004, invariant 3)', () => {
 
 describe('sampleTriangular range', () => {
 	it('stays within [-band, +band] for any band >= 3 and any seed', () => {
+		// Range covers actual production values: computeBand's max is
+		// dynamicBand(7+)=12 + composureAdjustment(<8)=+1 = 13 (see uncertainty.ts).
 		fc.assert(
-			fc.property(fc.integer({ min: 3, max: 8 }), fc.integer(), (band, seed) => {
+			fc.property(fc.integer({ min: 3, max: 15 }), fc.integer(), (band, seed) => {
 				const value = sampleTriangular(band, makeRng(seed));
 				expect(value).toBeGreaterThanOrEqual(-band);
 				expect(value).toBeLessThanOrEqual(band);

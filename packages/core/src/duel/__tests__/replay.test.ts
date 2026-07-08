@@ -1,7 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { makeRng } from '../../rng';
 import { resolveDuel } from '../resolveDuel';
-import type { DuelInput } from '../types';
+import type { DuelInput, Lane } from '../types';
+
+const LANES: readonly Lane[] = ['left', 'center', 'right'];
+
+function laneAt(index: number): Lane {
+	return LANES[index % LANES.length] ?? 'center';
+}
 
 function inputFor(index: number): DuelInput {
 	return {
@@ -9,14 +15,14 @@ function inputFor(index: number): DuelInput {
 			cardPower: 1 + (index % 4),
 			attribute: 8 + (index % 12),
 			modifiers: [index % 3],
-			chosenLane: (['left', 'center', 'right'] as const)[index % 3],
+			chosenLane: laneAt(index),
 			composure: 6 + (index % 15),
 		},
 		defense: {
 			cardPower: 1 + ((index + 2) % 4),
 			attribute: 6 + ((index + 5) % 12),
 			modifiers: [(index + 1) % 3],
-			bettedLane: (['left', 'center', 'right'] as const)[(index + 1) % 3],
+			bettedLane: laneAt(index + 1),
 			composure: 6 + ((index + 3) % 15),
 		},
 	};

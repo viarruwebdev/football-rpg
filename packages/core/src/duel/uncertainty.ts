@@ -1,3 +1,4 @@
+import { splitN } from '../rng/splitN';
 import type { Rng } from '../rng/types';
 
 const BAND_FLOOR = 3;
@@ -35,11 +36,12 @@ export function computeBand(
 }
 
 export function sampleTriangular(band: number, rng: Rng): number {
-	// Rng.next() is immutable per instance (same instance -> same value), so
-	// the two uniforms that form the triangular sum must come from two
-	// distinct child generators, not two next() calls on the same rng.
-	const rngA = rng.split();
-	const rngB = rngA.split();
+	// The two uniforms that form the triangular sum must come from two
+	// independent child generators (see splitN's docblock for why).
+	const [rngA, rngB] = splitN(rng, 2);
+	if (!rngA || !rngB) {
+		throw new Error('splitN(rng, 2) must return exactly 2 children');
+	}
 	const a = rngA.next();
 	const b = rngB.next();
 	const unit = (a + b) / 2; // triangular distribution in [0, 1), peak at 0.5

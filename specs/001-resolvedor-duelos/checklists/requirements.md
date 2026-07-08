@@ -24,7 +24,7 @@
 
 ## Claridad y ausencia de ambigüedades
 
-- [X] CHK011 — ¿Está cuantificada la "banda dinámica" con sus tres rangos exactos (0-4→±6, 5-6→±7, 7+→±8) sin adjetivos vagos? [Clarity, data-model.md]
+- [X] CHK011 — ¿Está cuantificada la "banda dinámica" con sus tres rangos exactos (0-4→±10, 5-6→±11, 7+→±12; recalibrada en [ADR-0001](../adr/0001-recalibrar-banda-dinamica.md)) sin adjetivos vagos? [Clarity, data-model.md]
 - [X] CHK012 — ¿Está cuantificado el ajuste de Composure por tramos (≥18→−2, 15-17→−1, 8-14→0, <8→+1) de forma exhaustiva y sin solapamientos? [Clarity, data-model.md]
 - [X] CHK013 — ¿Está definido el "suelo mínimo de banda" como ±3 con la semántica exacta (`max(banda + ajuste, 3)`)? [Clarity, Spec §RF-007, CE-004]
 - [X] CHK014 — ¿Es `TecnicaEspecialId` suficientemente opaca para no acoplar el resolvedor a ninguna técnica concreta en v1? [Clarity, data-model.md]
@@ -56,7 +56,7 @@
 
 ## Cobertura de escenarios y casos límite
 
-- [X] CHK028 — ¿Está definido el comportamiento cuando la diferencia efectiva es exactamente 4 (límite inferior de la banda ±6 vs ±7)? [Coverage, Edge Case, data-model.md]
+- [X] CHK028 — ¿Está definido el comportamiento cuando la diferencia efectiva es exactamente 4 (límite inferior de la banda ±10 vs ±11)? [Coverage, Edge Case, data-model.md]
 - [X] CHK029 — ¿Está definido qué ocurre cuando Composure es exactamente 8 (límite inferior del ajuste neutro) y 15 (límite del ajuste −1)? [Coverage, Edge Case]
 - [X] CHK030 — ¿Está especificado el resultado cuando el bruto acumulado de modificadores es exactamente 4 (límite del primer tramo 100%) o exactamente 8? [Coverage, Edge Case, Spec §RF-003]
 - [X] CHK031 — ¿Está definido el caso en que solo uno de los dos lados trae `tecnicaEspecial` (¿se aplica banda fija o no)? [Coverage, Edge Case, Spec §casos-límite] — solo se aplica banda fija ±4 si ambos lados la traen; ver `resolveDuel.ts` (`bothSidesHaveSpecialTechnique`)
