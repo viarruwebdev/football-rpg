@@ -6,9 +6,6 @@
 		"rootDir": "./src",
 		"noEmit": false
 	},
-	"references": [
-		{ "path": "../../packages/core" },
-		{ "path": "../../packages/content" }
-	],
+	"references": [{ "path": "../../packages/core" }, { "path": "../../packages/content" }],
 	"include": ["src"]
 }
