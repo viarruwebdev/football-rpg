@@ -43,7 +43,6 @@ export type DuelSegment =
 export type DuelEvent =
 	| { type: 'advance'; side: 'attack' | 'defense' }
 	| { type: 'cardSteal'; side: 'attack' | 'defense' }
-	| { type: 'momentum'; side: 'attack' | 'defense'; delta: number }
 	| { type: 'pressure'; delta: number }
 	| { type: 'transition' }
 	| { type: 'miniDuel' };

@@ -1,10 +1,12 @@
 import type { DuelEvent, DuelSegment } from './types';
 
+// Momentum de duelos de eslabón NO se emite como evento: la §7 (tabla de
+// duelos) lo deriva directamente del DuelSegment (tramo más específico,
+// incluido el aplastante a +1). Ver spec 003 y ADR correspondiente.
 const EVENTS_BY_SEGMENT: Record<DuelSegment, DuelEvent[]> = {
 	crushingSuccess: [
 		{ type: 'advance', side: 'attack' },
 		{ type: 'cardSteal', side: 'attack' },
-		{ type: 'momentum', side: 'attack', delta: 1 },
 	],
 	cleanSuccess: [{ type: 'advance', side: 'attack' }],
 	forcedAdvance: [
@@ -13,12 +15,8 @@ const EVENTS_BY_SEGMENT: Record<DuelSegment, DuelEvent[]> = {
 	],
 	splitBall: [{ type: 'miniDuel' }],
 	simpleLoss: [{ type: 'transition' }],
-	disadvantagedLoss: [{ type: 'transition' }, { type: 'momentum', side: 'defense', delta: 1 }],
-	devastatingCounter: [
-		{ type: 'transition' },
-		{ type: 'cardSteal', side: 'defense' },
-		{ type: 'momentum', side: 'defense', delta: 2 },
-	],
+	disadvantagedLoss: [{ type: 'transition' }],
+	devastatingCounter: [{ type: 'transition' }, { type: 'cardSteal', side: 'defense' }],
 };
 
 export function emitEvents(segment: DuelSegment): DuelEvent[] {

@@ -181,7 +181,7 @@ describeFeature(feature, ({ Background, Scenario, ScenarioOutline }) => {
 	);
 
 	Scenario(
-		'un éxito aplastante emite el evento de momentum pero no lo aplica',
+		'un éxito aplastante no emite evento de momentum (lo deriva la 003 del tramo)',
 		({ Given, When, Then, And }) => {
 			let events: ReturnType<typeof emitEvents>;
 
@@ -193,8 +193,11 @@ describeFeature(feature, ({ Background, Scenario, ScenarioOutline }) => {
 				events = emitEvents('crushingSuccess');
 			});
 
-			Then('se emite un evento de momentum "+1 atacante"', () => {
-				expect(events).toContainEqual({ type: 'momentum', side: 'attack', delta: 1 });
+			Then('no se emite ningún evento de tipo "momentum"', () => {
+				// DuelEvent ya no tiene variante 'momentum' (ver events.ts) — el check
+				// runtime confirma que ningún evento futuro reintroduce el tipo por error.
+				const types: string[] = events.map((event) => event.type);
+				expect(types).not.toContain('momentum');
 			});
 
 			And('el resolvedor no modifica por sí mismo la barra de momentum', () => {
