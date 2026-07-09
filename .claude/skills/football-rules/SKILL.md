@@ -111,15 +111,17 @@ El muestreo usa **dos uniformes independientes vía `rng.split()`**, promediadas
 
 ### Umbrales — eslabón normal
 
+**La columna Momentum es una redirección a la Parte 2 (§7, tabla de duelos), NO un valor propio de esta tabla.** El manual lo dice explícitamente para evitar el solapamiento que existía entre §6 y §7 en versiones anteriores. Los valores reales de momentum de cada tramo están en "Fuentes — duelos consecutivos" más abajo — no los dupliques aquí.
+
 | Resultado | Rango | Atacante | Defensor | Momentum |
 |---|---|---|---|---|
-| Éxito aplastante | ≥ +6 | Avanza + roba 1 carta | Superado (no defiende sig.) | +1 atacante |
+| Éxito aplastante | ≥ +6 | Avanza + roba 1 carta | Superado (no defiende sig.) | Ver §7 (duelo ganado) |
 | Éxito limpio | +3..+5 | Avanza | — | — |
 | Avance forzado | +1..+2 | Avanza +presión +1 | Reposiciona | — |
 | Balón dividido | 0 | Mini-duelo | Mini-duelo | — |
 | Pérdida simple | -1..-2 | Pierde balón | Inicia posesión | — |
-| Pérdida con desventaja | -3..-5 | Pierde balón | Transición +2 | +1 defensor |
-| Contragolpe devastador | ≤ -6 | Pierde + descolocado | Salto de zona +3 | +2 defensor |
+| Pérdida con desventaja | -3..-5 | Pierde balón | Transición +2 | Ver §7 (pérdida) |
+| Contragolpe devastador | ≤ -6 | Pierde + descolocado | Salto de zona +3 | Ver §7 (devastador) |
 
 ### Umbrales — remate (tiro vs portero)
 
@@ -127,7 +129,7 @@ El muestreo usa **dos uniformes independientes vía `rng.split()`**, promediadas
 |---|---|---|
 | Gol imparable | ≥ +5 | Gol, +2 momentum |
 | Gol | +3..+4 | Gol, +2 momentum |
-| Gol con rebote | +1..+2 | Gol, +2 momentum |
+| Gol con rebote | +1..+2 | Gol, +2 momentum, portero sin fatiga extra |
 | Paradón | 0 | No gol, córner, +1 momentum defensor |
 | Parada sólida | -1..-2 | No gol, portero atrapa, inversión de roles |
 | Parada y contragolpe | ≤ -3 | No gol, rival desde tercio medio +2 |
@@ -148,34 +150,49 @@ Azar ≈ **33%**, decisión del jugador (cartas + carril) ≈ **31%**, preparaci
 
 El momentum es la "inercia" de un equipo dentro del partido. Barra **por equipo**, oscila entre **-5 y +5** en pasos de **0.5**, empieza en 0. Se mueve por eventos significativos **y** por duelos ganados consecutivamente.
 
-### Fuentes — eventos significativos (lista cerrada)
+### Fuentes — eventos significativos (lista cerrada, 9 filas)
+
+El **éxito aplastante** (±6) NO está en esta tabla — se procesa exclusivamente por la tabla de duelos (abajo), como cualquier otro tramo de `DuelSegment`.
 
 | Evento | Delta |
 |---|---|
-| Gol a favor | +2 |
-| Gol en contra | -2 |
+| Marcar gol | +2 |
+| Encajar gol | -2 |
 | Gol contra la marea (solo si tu momentum es negativo) | +3 inversión |
-| Duelo aplastante ganado (+6) | +1 |
-| Duelo aplastante perdido (-6) | -1 |
 | Técnica especial exitosa por diferencial +5 o más | +1 |
 | Parada épica del portero (técnica especial) | +1 |
 | Portero ataja un mano a mano | +1 |
 | Robo de balón en zona avanzada (pressing) | +1 |
 | Racha de posesión (3+ duelos ganados en la misma posesión) | +1 |
+| Paradón estándar (tiro vs portero, resultado 0) | +1 defensor |
 
 ### Fuentes — duelos consecutivos (la antigua Racha, integrada)
 
-| Resultado del duelo | Delta |
-|---|---|
-| Duelo ganado consecutivamente | +0.5 |
-| Balón dividido (0) | No mueve momentum |
-| Pérdida simple (-1..-2) | -1 Y reset del contador de consecutivos |
-| Pérdida con desventaja (-3..-5) | -1.5 |
-| Contragolpe devastador (-6) | -2 |
+Cobertura **exhaustiva**: los siete tramos del §6 tienen regla. No hay resultado de duelo de eslabón huérfano.
 
-**Regla de no-doble-contabilidad:** las dos tablas pueden activarse en el mismo duelo (p. ej. un aplastante es un duelo ganado Y un evento significativo). Ambos deltas se suman. Pero un resultado de duelo solo aplica el tramo **más específico** de la tabla de duelos consecutivos (−6 aplica −2, no −2 más −1.5 más −1). Igualmente, un aplastante ganado da +1 por la tabla de eventos y +0.5 por duelo consecutivo (si había racha); no da +1 + +1.
+| Resultado del duelo | Delta | ¿Cuenta como duelo ganado? |
+|---|---|---|
+| Éxito aplastante (≥ +6) | **+1** (sustituye al +0.5, no lo suma) | Sí (incrementa consecutivos) |
+| Éxito limpio (+3..+5) — *"duelo ganado"* | +0.5 | Sí (incrementa consecutivos) |
+| Avance forzado (+1..+2) | **No mueve** | **No** (ni incrementa ni resetea) |
+| Balón dividido (0) | No mueve | No (ni incrementa ni resetea) |
+| Pérdida simple (-1..-2) | -1 | No — **resetea** consecutivos |
+| Pérdida con desventaja (-3..-5) | -1.5 | No — **resetea** consecutivos |
+| Contragolpe devastador (-6) | -2 | No — **resetea** consecutivos |
 
-La §6 emite el evento de momentum por el **lado del duelo** (atacante/defensor); la §7 lo **asigna al equipo** correspondiente.
+**Definición de "duelo ganado":** solo el **éxito limpio** (+3..+5) y el **éxito aplastante** (≥+6). El **avance forzado** (+1..+2) NO cuenta: el atacante progresa con presión pero el defensor no queda batido — es progresión, no dominio.
+
+**Reset del contador de consecutivos:** solo lo resetea **perder** el duelo (−1 o peor). Los resultados neutros (avance forzado, balón dividido) no lo incrementan pero tampoco lo rompen.
+
+**Las dos tablas son EXCLUYENTES por diseño.** Los duelos de eslabón normal se procesan **solo** por la tabla de duelos; la tabla de eventos cubre lo que no es un resultado de duelo de eslabón. Un resultado de -6 dispara SOLO la tabla de duelos (-2). Un resultado de +6 dispara SOLO la tabla de duelos (+1).
+
+**Excepción documentada:** los duelos tiro-vs-portero (remate) se procesan por la tabla de **eventos** cuando el resultado es un gol o un paradón estándar.
+
+**Dentro de la tabla de duelos, gana el tramo más específico**, sin acumular: un -6 aplica -2, no -2 más -1.5 más -1.
+
+**Las dos tablas SÍ se suman** cuando ambas aplican al mismo momento por vías distintas. Ejemplo: ganar el tercer duelo consecutivo de una posesión por éxito aplastante da +1 (tabla de duelos) + +1 (racha de posesión, tabla de eventos) = +2.
+
+**`resolveDuel` NO emite eventos de momentum.** Emite el tramo (`DuelSegment`); el sistema de momentum lo traduce vía la tabla de duelos. `resolveShot` sí emite eventos (gol, paradón estándar), por la excepción del remate.
 
 ### Efecto continuo: +0.15 de Fuerza por punto, cap ±0.75
 
@@ -195,7 +212,7 @@ El momentum es un **modificador de Fuerza**, NO de atributos ni de influencia. E
 
 Contribución continua (+0.75) + jugador "en la zona" (+1 influencia individual, participa en ~35% de duelos ≈ +0.35 sostenido) = **~+1.10 de Fuerza sostenida**. Los efectos de carta de umbral son puntuales, no sostenidos.
 
-Comprobación de jerarquía: jugador medio (influencia +0.5) con momentum +5 = +1.60 total. Jugador élite (influencia +3.5) con momentum -5 = +2.75 total. **El élite frío sigue ganando al medio encendido.** La jerarquía de calidad se preserva.
+Comprobación de jerarquía (cifras exactas del manual, no recalcular de memoria): medio encendido = +0.5 (influencia) + 0.75 (Fuerza continua) = **+1.25 de Fuerza directa**; **+1.60** incluyendo "en la zona" promediado (+0.35). Élite frío = +3.5 − 0.75 = **+2.75 de Fuerza directa**; **+2.40 neto** incluyendo que el "en la zona" del oponente le resta ventaja relativa (no resta de su propia Fuerza, suma a la del rival — equivalente en el duelo). El élite gana por **1.50 en Fuerza directa** y por **0.80 neto**. **La jerarquía de calidad se preserva en ambos cálculos.**
 
 ### Bonus por umbrales (one-shot, capa de cartas)
 
@@ -205,7 +222,7 @@ Estos son el grueso del efecto visible del momentum. No son sostenidos; se dispa
 |---|---|---|
 | +3 / -3 | Tu siguiente carta +1 potencia (un duelo) | Tu siguiente carta -1 potencia |
 | +4 / -4 | Robas 1 carta extra (una vez) | Robas 1 carta menos |
-| +5 / -5 | 1 jugador "en la zona": +1 influencia individual resto del partido (sobrevive aunque baje la barra; marca visual). Se desbloquea carta "Jugada perfecta" (potencia 6, 1 uso) | 1 jugador rival "en la zona" + carta rival |
+| +5 / -5 | 1 jugador "en la zona": +1 influencia individual resto del partido (sobrevive aunque baje la barra; marca visual). Se desbloquea carta "Jugada perfecta" (potencia 6, 1 uso) | 1 jugador **rival** entra "en la zona" (mismo efecto: +1 influencia individual, sobrevive). **NO desbloquea "Jugada perfecta"** — esa carta es exclusiva del +5 propio, sin contraparte en -5 (asimetría deliberada, no simétrica como ±3/±4). |
 
 "En la zona" es la **única** excepción donde el momentum toca influencia individual. Sobrevive al descenso de la barra.
 
