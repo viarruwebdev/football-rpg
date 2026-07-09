@@ -60,7 +60,7 @@ Algunos partidos tienen **modificadores de nodo** visibles antes de jugar que ca
 
 **Energía limitada** — 8 de energía en vez de 12. Técnicas especiales son un lujo.
 
-**Momentum volátil** — Momentum se mueve ×2. Rachas más poderosas, caídas más brutales.
+**Momentum volátil** — La barra de momentum se mueve ×2 (llegas antes a los umbrales +3/+4/+5 y caes antes). El efecto de Fuerza sigue capado en ±0.75.
 
 **Zona de confort rota** — Tu estilo habitual pierde -1 potencia. Cambiar de estilo para este partido no tiene penalización.
 

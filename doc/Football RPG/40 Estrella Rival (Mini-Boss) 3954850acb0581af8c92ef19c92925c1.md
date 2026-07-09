@@ -14,8 +14,8 @@ El jugador clave del rival (identificado vía análisis, sección 29) tiene pres
 
 **Stakes amplificados en sus duelos:**
 
-- Si la estrella gana por éxito aplastante (+6): +2 momentum rival (en vez de +1)
-- Si TÚ le ganas por éxito aplastante: +2 momentum para ti Y la estrella pierde -1 influencia temporal resto del partido (desmoralizado)
+- Si la estrella gana por éxito aplastante (+6): +2 momentum rival (en vez del -2 estándar por contragolpe devastador, el efecto se aplica al rival, no a ti)
+- Si TÚ le ganas por éxito aplastante: +2 momentum para ti (en vez de +0.5 estándar) Y la estrella pierde -1 influencia temporal resto del partido (desmoralizado)
 
 **Neutralización:** si al final del partido la estrella rival tuvo más duelos perdidos que ganados, bonus: +3 Legado extra. Incentiva la estrategia activa de "parar a su crack".
 

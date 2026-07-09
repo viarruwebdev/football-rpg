@@ -42,13 +42,13 @@ Al iniciar una nueva carrera:
 
 ## El bucle de cada temporada
 
-1. **Pretemporada:** contratas staff, evalúas plantilla, entrenas
+1. **Inicio de temporada:** pactos opcionales, evalúas plantilla, eliges formación/estilo
 2. **Fase suizo:** 32 franquicias compiten. Los 8 primeros en llegar a 5 victorias → Championship. El resto se ordena por récord en 3 copas (Oro, Plata, Bronce)
-3. **Playoff de cada división:** 6 clasificados, formato double elimination con lower bracket (estilo LEC Spring 2026)
-4. **Fin de temporada:** eliges 15 jugadores a retener (los jugadores pueden rechazar). Los descartados + canteranos no promovidos → bolsa del draft
-5. **Pre-draft:** intercambios de jugadores entre franquicias (se pueden incluir rondas de draft)
-6. **Draft:** lottery pick + elección por turnos hasta completar plantilla de 23
-7. **Evaluación de relegación** (cada 3 temporadas): las 8 peores franquicias se disuelven
+3. **Playoff de cada división:** 6 clasificados, formato double elimination con lower bracket penalizado (-0.5 influencia)
+4. **Relegación:** los 6 no-finalistas de Copa Bronce son eliminados. Los 2 finalistas sobreviven.
+5. **Fin de temporada:** eliges 15 jugadores a retener (los jugadores pueden rechazar). Los descartados + canteranos no promovidos → bolsa del draft
+6. **Pre-draft:** intercambios de jugadores entre franquicias (se pueden incluir rondas de draft)
+7. **Draft:** lottery pick (anti-tanking: mejores de Copa Bronce eligen primero) + elección por turnos hasta completar plantilla de 23
 
 ## Builds viables (rejugabilidad)
 
@@ -145,9 +145,9 @@ Cada run genera **1 semilla principal + 1 semilla secundaria** al azar. Las semi
 
 **"Temporada tranquila"** — Frecuencia -30%. Menos interrupciones.
 
-**"Evaluación acelerada"** — Relegación cada 2 temporadas (en vez de 3).
+**"Evaluación acelerada"** — Se relegan 8 en vez de 6 de Copa Bronce (solo el campeón sobrevive). Más presión.
 
-**"Evaluación relajada"** — Relegación cada 4 temporadas.
+**"Evaluación relajada"** — Se relegan solo 4 de Copa Bronce (los 4 finalistas sobreviven). Más margen.
 
 **"Suizo salvaje"** — Emparejamientos aleatorios (no por récord). Caos en clasificación.
 
@@ -161,9 +161,9 @@ Cada run genera **1 semilla principal + 1 semilla secundaria** al azar. Las semi
 
 **"Sin trades"** — Solo draft y retención. Lo que tienes es lo que hay.
 
-**"Momentum amplificado"** — Momentum se mueve ×2. Más oscilaciones, más remontadas.
+**"Momentum amplificado"** — La barra de momentum se mueve ×2 (se alcanzan los umbrales antes). El efecto de Fuerza sigue capado en ±0.75.
 
-**"Momentum congelado"** — Momentum se mueve ×0.5. Más estable. Quien marca primero manda.
+**"Momentum congelado"** — La barra de momentum se mueve ×0.5. Cuesta llegar a los umbrales. Más estable: quien marca primero manda.
 
 ## Combinaciones ejemplo
 
@@ -179,7 +179,7 @@ Cada run genera **1 semilla principal + 1 semilla secundaria** al azar. Las semi
 
 # Escalada de dificultad visible
 
-Cada ciclo de 3 temporadas, las **8 franquicias nuevas** que entran (sustituyendo a las relegadas) llegan con plantillas **ligeramente mejores que la media** de la liga (+5 PA medio en su generación). Son sangre fresca, hambrienta y sin vicios.
+Cada ciclo de 3 temporadas, las **6 franquicias nuevas** que entran cada temporada (sustituyendo a las relegadas de Copa Bronce) llegan con plantillas **ligeramente mejores que la media** de la liga (+5 PA medio en su generación).
 
 Además, el **pool del draft mejora gradualmente**: cada temporada, los jugadores jóvenes nuevos generados para la bolsa del draft tienen +1 PA medio acumulativo respecto a la temporada anterior. En la temporada 9, el talento base del draft es +9 PA superior al de la temporada 1.
 
@@ -199,7 +199,7 @@ Recursos de un solo uso que se ganan por logros dentro de la run (no entre runs,
 
 **Comodín táctico** — En 1 partido, puedes cambiar de estilo/formación SIN el coste de adaptación (sin los 2-3 partidos de rendimiento reducido). Se gana: ganar 5+ partidos seguidos en el suizo.
 
-**Blindaje de retención** — 1 jugador de tu elección acepta la retención garantizado (ignora moral, rasgos, resultados). Se gana: sobrevivir a una evaluación de relegación estando entre los puestos 9-12 (casi relegado pero te salvaste).
+**Blindaje de retención** — 1 jugador de tu elección acepta la retención garantizado (ignora moral, rasgos, resultados). Se gana: sobrevivir en Copa Bronce (llegar a la final del survival bracket).
 
 **Convocatoria estrella** — Añade 1 jugador temporal de alta calidad (PA 150+, generado proceduralmente) a tu plantilla durante 3 partidos. No cuenta como canterano ni se queda después. Se gana: ganar el Championship.
 
@@ -297,7 +297,7 @@ Al inicio de cada temporada se ofrecen 2-3 **pactos opcionales.** Cada pacto da 
 
 **"Pacto del ojeador"** — Beneficio: ojeador funciona +1 estrella. Maldición: asistente funciona -1 estrella.
 
-**"Pacto de la racha"** — Beneficio: racha de partido se activa a 2/4/6/8 (en vez de 3/5/7/10). Maldición: al romperse, penalizador -1 influencia durante 3 duelos (en vez de -0.5 durante 2).
+**"Pacto del momentum"** — Beneficio: los bonus de umbral se activan 1 escalón antes (+2/+3/+4 en vez de +3/+4/+5). Maldición: cuando pierdes un duelo, el momentum baja -2 (en vez de -1). El cap de Fuerza (±0.75) no cambia.
 
 **"Pacto del capitán"** — Beneficio: el capitán gana +2 influencia permanente toda la temporada. Maldición: si el capitán se lesiona o pierde moral, TODA la plantilla baja 2 escalones de moral (en vez de 1).
 

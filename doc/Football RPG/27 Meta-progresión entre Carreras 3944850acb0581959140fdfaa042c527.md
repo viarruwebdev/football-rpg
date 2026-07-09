@@ -15,7 +15,7 @@ Cada run genera puntos de Legado según logros. Se gastan en desbloqueos permane
 | Logro | Legado |
 | --- | --- |
 | Completar una temporada | +5 |
-| Sobrevivir evaluación de relegación (cada 3 temp.) | +10 |
+| Sobrevivir una temporada sin ser relegado | +10 |
 | Clasificarse al Championship | +8 |
 | Ganar el Championship | +25 |
 | Ganar Copa Oro | +15 |
@@ -27,7 +27,7 @@ Cada run genera puntos de Legado según logros. Se gastan en desbloqueos permane
 | Llegar a final de cualquier copa | +5 |
 | Remontar partido playoff perdiendo 0-2 | +5 |
 | Alcanzar 10 temporadas con la misma franquicia | +20 |
-| Ser relegado (fin de run) | +2 (consuelo) |
+| Ser relegado (fin de run) | 0 (morir no da nada) |
 
 Run corta (1-2 temp., relegado): ~5-10 Legado. Run larga (10 temp., varios títulos): ~80-120.
 

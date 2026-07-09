@@ -1,22 +1,25 @@
 ---
 name: football-rules
-description:
-  Fuente de verdad de la resolución de duelos del Football RPG (manual §6):
-  fórmula de fuerza, compresión de atributos 1-20 → -4..+4, modificadores con
-  rendimientos decrecientes, incertidumbre triangular con banda dinámica y
-  Composure, acierto/fallo de carril, secuencia del duelo y umbrales de
-  resultado (eslabón normal y remate). Úsala SIEMPRE que implementes, pruebes o
-  balancees cualquier cálculo de fuerza, diferencial, resultado, umbral,
-  momentum o remate en packages/core (resolveDuel, resolveShot, applyMomentum).
-  Palabras clave: duelo, resolución, fuerza, diferencial, umbral, carril,
-  incertidumbre, banda, Composure, momentum, remate.
+description: >-
+  Fuente de verdad de la resolución de duelos y el sistema de momentum del
+  Football RPG (manual §6 y §7 unificado). Úsala SIEMPRE que implementes,
+  pruebes o balancees cualquier cálculo de fuerza, diferencial, resultado,
+  umbral, momentum, remate o modificador en packages/core. Palabras clave:
+  duelo, resolución, fuerza, diferencial, umbral, carril, incertidumbre, banda,
+  Composure, momentum, cap, remate, racha, degradación.
 ---
 
-# Reglas de resolución — Football RPG (§6)
+# Reglas de resolución y momentum — Football RPG (§6 + §7)
 
-Esta skill codifica la tabla de resolución del manual. Es la **fuente de verdad** para el motor de duelos. Si un número aquí contradice tu memoria, gana esta skill; si contradice el manual de Notion, gana el manual (y actualiza esta skill). Todos los cálculos viven en `packages/core` y deben ser **puros y deterministas** (ver skill `core-determinism-guard`).
+Esta skill codifica las reglas de las secciones 6 y 7 del manual. Es la **fuente de verdad** para el motor. Si un número aquí contradice tu memoria, gana esta skill; si contradice el manual de Notion, gana el manual (y actualiza esta skill).
 
-## Fórmula base
+Todos los cálculos viven en `packages/core` y deben ser **puros y deterministas** (ver skill `core-determinism-guard`).
+
+---
+
+## PARTE 1 — Resolución de duelos (§6)
+
+### Fórmula base
 
 ```
 FuerzaAtaque  = potenciaCarta + influenciaAtributo + modsSituacionales
@@ -25,9 +28,12 @@ Diferencial   = FuerzaAtaque − FuerzaDefensa
 Resultado     = Diferencial + incertidumbre
 ```
 
-Se aplican **íntegros, sin tope**: `potenciaCarta`, `influenciaAtributo`, `carril`. Solo `modsSituacionales` sufren rendimientos decrecientes.
+`potenciaCarta`, `influenciaAtributo` y `carril` se aplican **íntegros** (sin rendimientos decrecientes ni cap).
+Solo `modsSituacionales` sufren rendimientos decrecientes.
 
-## Compresión de atributos (1-20 → -4..+4)
+**ATENCIÓN — aritmética fraccional.** El momentum aporta valores fraccionales (+0.15/punto). El pipeline debe tolerar Fuerza, Diferencial y Resultado fraccionales. Los puntos de redondeo explícitos son: (1) el diferencial que alimenta `computeBand` (se redondea al entero más cercano para elegir tramo de banda), y (2) el Resultado final antes de `classify` (se redondea al entero más cercano para entrar en los umbrales). Cualquier otro punto de redondeo debe documentarse y testearse.
+
+### Compresión de atributos (1-20 → -4..+4)
 
 Los atributos NUNCA se suman en bruto. Se convierten:
 
@@ -43,9 +49,9 @@ Los atributos NUNCA se suman en bruto. Se convierten:
 | 16-17 | +3 |
 | 18-20 | +4 |
 
-## Modificadores situacionales (rendimientos decrecientes)
+### Modificadores situacionales (rendimientos decrecientes)
 
-Sin tope duro, pero con retorno decreciente sobre el **bruto acumulado**:
+Sin tope duro general, pero con retorno decreciente sobre el **bruto acumulado**:
 
 - Puntos 1-4 → 100% (1:1)
 - Puntos 5-8 → 50% (2:1)
@@ -53,11 +59,13 @@ Sin tope duro, pero con retorno decreciente sobre el **bruto acumulado**:
 
 Ejemplos: +3→+3, +4→+4, +6→+5, +8→+6, +10→+7, +12→+7.
 
-**Son mods** (sufren el decrecimiento): momentum, Technique, First Touch, Important Matches, bonus de estilo, bonus de rol, bonus de química, condiciones de partido, presión acumulada por eslabón. **NO son mods** (íntegros): potencia de carta, influencia de atributo, acierto/fallo de carril.
+**Son mods** (sufren el decrecimiento): **momentum** (con su propio cap de ±0.75 aplicado ANTES de entrar aquí), Technique, First Touch, Important Matches, bonus de estilo, bonus de rol, bonus de química, condiciones de partido, presión acumulada por eslabón.
 
-Cap global relacionado (nota de balance del catálogo): ningún bonus externo acumulado supera +5; el exceso se ignora. La presión defensiva acumulada sube +1 por eslabón consecutivo.
+**El momentum tiene además un cap propio de ±0.75** antes de entrar en la tabla de rendimientos decrecientes. Es el **único modificador con cap propio**, porque se aplica a los 11 jugadores a la vez y sin él superaría el gap élite-medio. Ver Parte 2.
 
-## Carril (mind-game)
+**NO son mods** (íntegros): potencia de carta, influencia de atributo, acierto/fallo de carril.
+
+### Carril (mind-game)
 
 El defensor apuesta carril (izquierda/centro/derecha):
 
@@ -67,16 +75,21 @@ El defensor apuesta carril (izquierda/centro/derecha):
 
 Marking modifica la apuesta: 14+ revela 1 carril que NO es el destino; 17+ revela el correcto.
 
-## Incertidumbre (distribución triangular)
+**En remates normales NO hay carril ni apuesta de palo.** La apuesta de palo es exclusiva de penaltis.
+
+### Incertidumbre (distribución triangular)
 
 Banda base **-6..+6**, triangular centrada en 0 (extremos raros: 0≈12%, ±1≈11%, ±2≈9%, ±3≈7%, ±4≈5%, ±5≈3%, ±6≈1% por lado).
 
-**Banda dinámica** según diferencia efectiva (antes del azar):
-- 0-4 → ±6
-- 5-6 → ±7
-- 7+ → ±8
+**Banda dinámica** según diferencia efectiva (antes del azar), **redondeada al entero para elegir tramo**:
 
-**Composure ajusta la banda:**
+> ⚠️ **ADR-0001:** los valores de diseño del manual son 6/7/8. El código usa **10/11/12** (recalibrados tras corregir el muestreo triangular). Ver ADR.
+
+- Diferencia 0-4 → ±10
+- Diferencia 5-6 → ±11
+- Diferencia 7+ → ±12
+
+**Composure ajusta la banda** (se usa la Composure del jugador que **inicia la acción**):
 - 8-14 → sin ajuste
 - 15-17 → banda −1
 - 18-20 → banda −2
@@ -85,24 +98,22 @@ Banda base **-6..+6**, triangular centrada en 0 (extremos raros: 0≈12%, ±1≈
 **Suelo mínimo de banda: ±3** (nunca menos, por ninguna combinación).
 **Técnica especial vs técnica especial: banda fija ±4.**
 
-> El PRNG sembrado debe muestrear la triangular; misma semilla ⇒ mismo valor. Es donde el determinismo se juega.
+El muestreo usa **dos uniformes independientes vía `rng.split()`**, promediadas y escaladas. Nunca dos `next()` sobre el mismo `Rng` (ver `core-determinism-guard`).
 
-## Secuencia exacta del duelo
+### Secuencia exacta del duelo
 
 1. Atacante elige carta + jugador + destino (incluye carril). Firme.
 2. Instantes pre-revelado (Amague = info falsa al defensor; Visión periférica = revela apuesta del defensor).
 3. Defensor elige carta + defensor + apuesta de carril. Firme.
 4. Revelado simultáneo.
-5. Efectos post-revelado que manipulan carril (Recorte, Ruleta, Regate doble, Enganche y salida): no cambian el carril declarado, cambian cómo se compara.
+5. Efectos post-revelado que manipulan carril (Recorte, Ruleta, Regate doble, Enganche y salida).
 6. Resolución: fórmula + incertidumbre + umbrales.
 
-Apuesta de palo (portero elige carril): **solo en penaltis**, no en remates normales.
-
-## Umbrales — eslabón normal
+### Umbrales — eslabón normal
 
 | Resultado | Rango | Atacante | Defensor | Momentum |
 |---|---|---|---|---|
-| Éxito aplastante | ≥ +6 | Avanza + roba 1 | Superado (no defiende sig.) | +1 atacante |
+| Éxito aplastante | ≥ +6 | Avanza + roba 1 carta | Superado (no defiende sig.) | +1 atacante |
 | Éxito limpio | +3..+5 | Avanza | — | — |
 | Avance forzado | +1..+2 | Avanza +presión +1 | Reposiciona | — |
 | Balón dividido | 0 | Mini-duelo | Mini-duelo | — |
@@ -110,7 +121,7 @@ Apuesta de palo (portero elige carril): **solo en penaltis**, no en remates norm
 | Pérdida con desventaja | -3..-5 | Pierde balón | Transición +2 | +1 defensor |
 | Contragolpe devastador | ≤ -6 | Pierde + descolocado | Salto de zona +3 | +2 defensor |
 
-## Umbrales — remate (tiro vs portero)
+### Umbrales — remate (tiro vs portero)
 
 | Resultado | Rango | Efecto |
 |---|---|---|
@@ -121,19 +132,123 @@ Apuesta de palo (portero elige carril): **solo en penaltis**, no en remates norm
 | Parada sólida | -1..-2 | No gol, portero atrapa, inversión de roles |
 | Parada y contragolpe | ≤ -3 | No gol, rival desde tercio medio +2 |
 
-Mods de remate: asistencia previa +3; centro previo → cabezazos +2; avance forzado previo -2; disparo lejano desde Ataque -3 (Long Shots 16+ −2, 18+ elimina) / desde Medio -5; ángulo lateral del Área -2.
+Mods de remate: asistencia previa +3; cabezazo tras centro +2; avance forzado previo -2; disparo lejano desde Ataque -3 (Long Shots 16+ reduce en 2, 18+ elimina); disparo lejano desde Medio -5; ángulo lateral del Área -2. En remates normales NO hay componente de carril.
 
-## Balón dividido (resultado 0)
+### Balón dividido (resultado 0)
 
 Ambos deciden a la vez **forzar** (gasta 1 energía, +2 fuerza) o **ceder**. Ambos fuerzan → nuevo aleatorio banda -2/+2, ganador +1 momentum. Atacante fuerza/def cede → atacante avanza lateral. Def fuerza/atac cede → defensor roba, misma zona. Ambos ceden → balón fuera, 1 jugada consumida.
 
-## Momentum (resumen operativo)
-
-Barra -5..+5, empieza en 0. Efecto lineal: +0.5 fuerza por punto, **techo en +2** (a partir de momentum +4). Solo lo mueven eventos significativos (gol ±2, aplastante ±1, técnica especial +1, racha 3+ duelos +1, robo por pressing +1, gol contra la marea +3). Degradación asimétrica: el positivo baja 1 hacia 0 por posesión sin evento; el negativo baja 1 cada posesión (más rápido); Determination alta lo acelera.
-
-## Pesos objetivo (para el harness de balance)
+### Pesos objetivo (para el harness de balance)
 
 Azar ≈ **33%**, decisión del jugador (cartas + carril) ≈ **31%**, preparación (atributos + mods) ≈ **37%**. Calibración de referencia (FM): élite vs mediocre ≈ **80-85%**; élite vs pésimo ≈ 90-95%; bueno vs bueno ≈ 50%.
+
+---
+
+## PARTE 2 — Sistema de momentum (§7 unificado)
+
+El momentum es la "inercia" de un equipo dentro del partido. Barra **por equipo**, oscila entre **-5 y +5** en pasos de **0.5**, empieza en 0. Se mueve por eventos significativos **y** por duelos ganados consecutivamente.
+
+### Fuentes — eventos significativos (lista cerrada)
+
+| Evento | Delta |
+|---|---|
+| Gol a favor | +2 |
+| Gol en contra | -2 |
+| Gol contra la marea (solo si tu momentum es negativo) | +3 inversión |
+| Duelo aplastante ganado (+6) | +1 |
+| Duelo aplastante perdido (-6) | -1 |
+| Técnica especial exitosa por diferencial +5 o más | +1 |
+| Parada épica del portero (técnica especial) | +1 |
+| Portero ataja un mano a mano | +1 |
+| Robo de balón en zona avanzada (pressing) | +1 |
+| Racha de posesión (3+ duelos ganados en la misma posesión) | +1 |
+
+### Fuentes — duelos consecutivos (la antigua Racha, integrada)
+
+| Resultado del duelo | Delta |
+|---|---|
+| Duelo ganado consecutivamente | +0.5 |
+| Balón dividido (0) | No mueve momentum |
+| Pérdida simple (-1..-2) | -1 Y reset del contador de consecutivos |
+| Pérdida con desventaja (-3..-5) | -1.5 |
+| Contragolpe devastador (-6) | -2 |
+
+**Regla de no-doble-contabilidad:** las dos tablas pueden activarse en el mismo duelo (p. ej. un aplastante es un duelo ganado Y un evento significativo). Ambos deltas se suman. Pero un resultado de duelo solo aplica el tramo **más específico** de la tabla de duelos consecutivos (−6 aplica −2, no −2 más −1.5 más −1). Igualmente, un aplastante ganado da +1 por la tabla de eventos y +0.5 por duelo consecutivo (si había racha); no da +1 + +1.
+
+La §6 emite el evento de momentum por el **lado del duelo** (atacante/defensor); la §7 lo **asigna al equipo** correspondiente.
+
+### Efecto continuo: +0.15 de Fuerza por punto, cap ±0.75
+
+El momentum es un **modificador de Fuerza**, NO de atributos ni de influencia. Entra en el bruto acumulado de mods situacionales y **sí** sufre rendimientos decrecientes con el resto.
+
+| Barra | Contribución bruta |
+|---|---|
+| ±1 | ±0.15 |
+| ±2 | ±0.30 |
+| ±3 | ±0.45 |
+| ±4 | ±0.60 |
+| ±5 | ±0.75 (cap duro) |
+
+**El cap de ±0.75 se aplica ANTES de entrar en los rendimientos decrecientes.** Si una semilla o pacto amplifica el momentum (ej. "Momentum amplificado", ×2), el efecto sigue capado en ±0.75.
+
+### Cap efectivo total en +5
+
+Contribución continua (+0.75) + jugador "en la zona" (+1 influencia individual, participa en ~35% de duelos ≈ +0.35 sostenido) = **~+1.10 de Fuerza sostenida**. Los efectos de carta de umbral son puntuales, no sostenidos.
+
+Comprobación de jerarquía: jugador medio (influencia +0.5) con momentum +5 = +1.60 total. Jugador élite (influencia +3.5) con momentum -5 = +2.75 total. **El élite frío sigue ganando al medio encendido.** La jerarquía de calidad se preserva.
+
+### Bonus por umbrales (one-shot, capa de cartas)
+
+Estos son el grueso del efecto visible del momentum. No son sostenidos; se disparan **una vez** al cruzar el umbral. Simétricos en negativo.
+
+| Umbral | Bonus positivo | Bonus negativo |
+|---|---|---|
+| +3 / -3 | Tu siguiente carta +1 potencia (un duelo) | Tu siguiente carta -1 potencia |
+| +4 / -4 | Robas 1 carta extra (una vez) | Robas 1 carta menos |
+| +5 / -5 | 1 jugador "en la zona": +1 influencia individual resto del partido (sobrevive aunque baje la barra; marca visual). Se desbloquea carta "Jugada perfecta" (potencia 6, 1 uso) | 1 jugador rival "en la zona" + carta rival |
+
+"En la zona" es la **única** excepción donde el momentum toca influencia individual. Sobrevive al descenso de la barra.
+
+### Bonus post-partido por momentum máximo
+
+El sistema **registra el máximo alcanzado** por partido (no baja con degradación). Los bonus se resuelven al terminar el partido.
+
+| Máximo alcanzado | Bonus |
+|---|---|
+| +4 | +1 opción en la recompensa |
+| +5 | +1 opción + recompensa mejorada |
+| +5 durante 5+ jugadas | Todo lo anterior + jugador "en la zona" gana +1 CA permanente |
+
+### Degradación (asimétrica, por posesión)
+
+**Positivo:** -1 por cada posesión **sin evento significativo ni duelo ganado**. Mantenerlo exige acción constante.
+
+**Negativo:** -1 hacia 0 en **cada** posesión (no solo sin evento). Más rápido que el positivo.
+
+**Determination alta:** equipo con Determination media 16+ pasa de -2 a 0 en **1 posesión** en vez de 2.
+
+**La degradación nunca cruza el 0** (no pasa de positivo a negativo ni viceversa).
+
+### Saturación
+
+La barra se satura en **±5**; sumar por encima no la pasa de 5 ni por debajo de -5.
+
+### Estado que mantiene el sistema
+
+- Barra por equipo (fraccional, en pasos de 0.5, rango [-5, +5]).
+- Contador de duelos consecutivos ganados (por equipo, se resetea al perder).
+- Máximo alcanzado por equipo en el partido (para bonus post-partido).
+- Registro de umbrales cruzados (para los one-shot: +3/+4/+5 solo disparan una vez por cruce).
+- Jugador "en la zona" (si se disparó +5; sobrevive al descenso).
+
+### Interacción con rasgos (referencia, no implementar en 003-v1)
+
+- **Sangre fría:** en el descuento, pérdida simple (-1/-2) no baja momentum.
+- **Precipitado:** perder un duelo baja -1.5 en vez de -1.
+- **Defensor implacable:** duelos defensivos ganados dan +1 en vez de +0.5.
+- **Organizador:** pases cortos exitosos con momentum 3+ regeneran +1 energía cada 3 eslabones.
+
+---
 
 ## Invariantes verificables (property-based)
 
@@ -143,13 +258,20 @@ Escribe estas propiedades con fast-check en `packages/core`:
 2. **Rango de influencia:** la influencia de atributo siempre ∈ [-4, +4].
 3. **Suelo de banda:** la banda de incertidumbre nunca es menor que ±3.
 4. **Monotonía de mods:** aumentar un mod bruto nunca reduce el mod efectivo.
-5. **Techo de momentum:** el efecto de momentum en fuerza nunca supera ±2.
-6. **Cobertura de umbrales:** todo `Resultado` cae en exactamente un umbral (sin huecos ni solapes).
+5. **Cap de momentum:** la contribución bruta del momentum nunca supera ±0.75.
+6. **Cobertura de tramos:** todo `Resultado` (redondeado al entero) cae en exactamente un umbral (sin huecos ni solapes).
 7. **Carril íntegro:** el efecto de carril no se ve reducido por el tope de mods.
+8. **Saturación de barra:** la barra de momentum nunca sale de [-5, +5].
+9. **Degradación no cruza 0:** la degradación nunca lleva una barra positiva a negativa ni viceversa.
+10. **Máximo no baja:** el máximo alcanzado es mayor o igual que el máximo anterior tras cualquier operación.
 
 ## Qué NO hacer
 
 - No sumar atributos en bruto (usa la compresión).
 - No aplicar rendimientos decrecientes a potencia, influencia ni carril.
 - No usar `Math.random`: la incertidumbre viene del PRNG sembrado.
-- No inventar umbrales intermedios: son exactamente los de las dos tablas.
+- No inventar umbrales intermedios: son exactamente los de las tablas.
+- No llamar a `rng.next()` dos veces sobre el mismo Rng sin `split()`.
+- No aplicar el momentum como influencia (es modificador de Fuerza, con cap y rendimientos decrecientes).
+- No ignorar el cap de ±0.75 en ninguna circunstancia (incluidas semillas/pactos amplificados).
+- No tratar los umbrales +3/+4/+5 como sostenidos: son one-shot al cruzar.

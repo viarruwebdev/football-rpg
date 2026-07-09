@@ -53,6 +53,8 @@ Ejemplos de conversión:
 
 Fuentes que entran como modificadores situacionales: momentum, Technique, First Touch, Important Matches, bonus de estilo de juego, bonus de rol, bonus de química, condiciones de partido, presión acumulada por eslabón.
 
+**El momentum tiene además su propio cap duro de ±0.75** (+0.15 por punto de barra) antes de entrar en esta tabla. Es el único modificador con cap propio, porque se aplica a los 11 jugadores a la vez y sin él superaría el gap élite-medio. Ver sección 7.
+
 Lo que NO es modificador (se aplica íntegro siempre): la potencia de la carta, la influencia del atributo y el acierto/fallo de carril.
 
 Así, un jugador con Technique 20 (que aporta +2 a sus cartas) siempre se diferencia de uno con Technique 14 (que aporta +0). Cada punto suma algo, pero cada vez menos. Los atributos secundarios de élite importan.
@@ -131,13 +133,15 @@ En remates normales NO hay apuesta de palo del portero. El duelo es tiro (carta 
 
 | Resultado | Rango | Efecto atacante | Efecto defensor | Momentum |
 | --- | --- | --- | --- | --- |
-| Éxito aplastante | +6 o más | Avanza + roba 1 carta | Superado (no defiende siguiente) | +1 atacante |
+| Éxito aplastante | +6 o más | Avanza + roba 1 carta | Superado (no defiende siguiente) | Ver §7 (duelo ganado) |
 | Éxito limpio | +3 a +5 | Avanza | — | — |
 | Avance forzado | +1 a +2 | Avanza con presión extra +1 | Reposiciona | — |
 | Balón dividido | 0 | Mini-duelo | Mini-duelo | — |
 | Pérdida simple | -1 a -2 | Pierde balón | Inicia posesión | — |
-| Pérdida con desventaja | -3 a -5 | Pierde balón | Transición +2 bonus | +1 defensor |
-| Contragolpe devastador | -6 o menos | Pierde + descolocado | Salto de zona +3 bonus | +2 defensor |
+| Pérdida con desventaja | -3 a -5 | Pierde balón | Transición +2 bonus | Ver §7 (pérdida) |
+| Contragolpe devastador | -6 o menos | Pierde + descolocado | Salto de zona +3 bonus | Ver §7 (devastador) |
+
+**Nota sobre la columna Momentum de las tablas de umbrales:** los valores de momentum por resultado de duelo se gestionan EXCLUSIVAMENTE en la sección 7 (tabla de duelos). Las referencias "Ver §7" en las tablas de esta sección son redirecciones, no valores propios. Esto evita el solapamiento que existía anteriormente entre las dos secciones.
 
 # Umbrales de resultado — Remate (tiro vs portero)
 
@@ -146,7 +150,7 @@ En remates normales NO hay apuesta de palo del portero. El duelo es tiro (carta 
 | Gol imparable | +5 o más | Gol, +2 momentum |
 | Gol | +3 a +4 | Gol, +2 momentum |
 | Gol con rebote | +1 a +2 | Gol, +2 momentum, portero sin fatiga extra |
-| Paradón | 0 | No gol, córner, +1 momentum defensor |
+| Paradón | 0 | No gol, córner, +1 momentum defensor (ver §7: Paradón estándar) |
 | Parada sólida | -1 a -2 | No gol, portero atrapa, inversión de roles |
 | Parada y contragolpe | -3 o menos | No gol, rival desde tercio medio +2 bonus |
 
@@ -181,7 +185,7 @@ Cuando el resultado es exactamente 0. Ambos deciden simultáneamente: **forzar**
 
 **Paso 3:** Técnica de ataque vs defensa normal = umbrales se desplazan +2 a favor del atacante.
 
-**Paso 4:** Técnicas que ganan por +5 o más generan evento de impacto: +1 atributo temporal al jugador durante el resto del partido. Golazo especial = +3 momentum.
+**Paso 4:** Técnicas que ganan por +5 o más generan evento de impacto: +1 atributo temporal al jugador durante el resto del partido. Golazo especial = +2 momentum (gol) + +1 (técnica exitosa) = +3 total. Coherente con las dos tablas de la §7 sumadas sin solapamiento: el gol es un evento (+2), la técnica exitosa es otro evento (+1).
 
 ---
 

@@ -130,7 +130,7 @@ Afectan a moral, química y gestión.
 
 **Pegamento del grupo** — Reduce -2 la penalización de moral baja de compañeros. Estabiliza el vestuario. Req: Teamwork 17+, Leadership 14+.
 
-**Modesto** — Acepta ser suplente sin penalización moral. No pide subida de sueldo. Req: Ambition <8, Loyalty 15+.
+**Modesto** — Acepta ser suplente sin penalización moral. Nunca rechaza la retención. Req: Ambition <8, Loyalty 15+.
 
 **Veterano sabio** — Jugadores <21 que juegan con él ganan +5% velocidad desarrollo. Mentor natural. Req: edad 30+, Leadership 14+, Teamwork 14+, Professionalism 14+.
 
@@ -138,11 +138,11 @@ Afectan a moral, química y gestión.
 
 ## Defectos de vestuario
 
-**Diva** — Exige ser titular. Si no juega 2 partidos seguidos: moral -2, moral vestuario -1. Pide traspaso si no le suben sueldo. Req: Ambition 17+, Loyalty <8.
+**Diva** — Exige ser titular. Si no juega 2 partidos seguidos: moral -2, moral vestuario -1. Aumenta mucho su probabilidad de rechazar la retención. Req: Ambition 17+, Loyalty <8.
 
 **Tóxico** — -1 chemistry con TODOS. Conflicto con otro jugador baja moral del grupo -1. Req: Controversy 15+, Teamwork <8.
 
-**Mercenario** — Si recibe oferta con salario +30% superior, exige traspaso automático. Req: Loyalty <6, Ambition 15+.
+**Mercenario** — Si otra franquicia tiene mejor ranking global que la tuya, su probabilidad de rechazar la retención sube +30%. Req: Loyalty <6, Ambition 15+.
 
 **Vestuario dividido** — Si este jugador y otro "Tóxico"/"Diva" están en la plantilla, 15%/temporada de conflicto abierto (moral grupo -2). Req: Temperament <8.
 
@@ -190,7 +190,7 @@ Afectan a cartas que aporta y cómo aparece en el campo.
 
 **Con eventos narrativos:** rasgos son detonadores. "Diva" genera conflictos. "Ídolo local" genera eventos de afición. "Talento tardío" genera sorpresa al florecer.
 
-**Con economía:** "Mercenario" exige salarios altos. "Modesto" acepta menos. "Diva" necesita ser el mejor pagado.
+**Con retención y draft:** "Mercenario" y "Diva" suben la probabilidad de rechazo. "Modesto" e "Ídolo local" la eliminan o reducen. Los rasgos de vestuario son la palanca principal de la retención (no hay salarios; ver sección 24).
 
 ## Volumen total de rasgos
 

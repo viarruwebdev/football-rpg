@@ -10,7 +10,7 @@ El partido se mide en **jugadas totales** compartidas entre ambos equipos. La un
 
 **Descuento: 4-8 jugadas** (variable según eventos del partido). Tensión máxima. Cada jugada puede ser la última. El número exacto es **semioculto**: el jugador ve un rango estimado (ej: "4-7 jugadas") pero no el número exacto. Se revela solo cuando quedan 2 jugadas. El rango se estima por faltas, lesiones y cambios acumulados.
 
-Total aproximado: 64-68 jugadas por partido. Partidos de unos 15-20 minutos reales.
+Total aproximado: 64-68 jugadas por partido. La duración real depende del modo de velocidad elegido (ver sección final): Completo ~20-30 min, Táctico ~8-10 min, Resumen ~1 min.
 
 ## Qué genera el descuento variable
 

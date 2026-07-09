@@ -19,7 +19,7 @@ Juego web app de fútbol RPG que combina cartas, gestión de franquicia estilo N
 
 **Puente 2: El partido se decide en duelos.** Un motor por turnos con cadenas de posesión por cartas donde cada acción disputada abre un duelo donde entran cartas, técnicas y stats.
 
-**Puente 3: La liga es la run.** El roguelite envuelve la carrera. Cada 3 temporadas las 8 peores franquicias son eliminadas y sustituidas. Si estás en ese grupo, fin de la run.
+**Puente 3: La liga es la run.** El roguelite envuelve la carrera. Cada temporada, los 6 equipos de Copa Bronce que no llegan a su final son relegados y sustituidos. Si estás en ese grupo, fin de la run. La amenaza es constante desde la temporada 1.
 
 ## Decisiones de diseño confirmadas
 

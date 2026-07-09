@@ -18,7 +18,7 @@ Un jugador descubre ~3-6 sinergias por run según cómo construya su equipo.
 
 **"Triángulo mágico"** — 3 jugadores ofensivos (mediapunta + extremo + delantero) con química 50+ entre los 3 pares. Bonus: la Triangulación se activa a 2 eslabones consecutivos en vez de 3.
 
-**"Disparo a discre ción"** — 2+ jugadores en la alineación con Long Shots 15+ y técnica de tiro (Cañonero o similar). Bonus: los disparos lejanos pierden solo -1 de penalización en vez de -3.
+**"Disparo a discreción"** — 2+ jugadores en la alineación con Long Shots 15+ y técnica de tiro (Cañonero o similar). Bonus: los disparos lejanos pierden solo -1 de penalización en vez de -3.
 
 **"Fábrica de goles"** — 3 jugadores distintos han marcado en el mismo partido. Bonus: el 4º gol del equipo (si lo hay) gana +2 potencia automático (el equipo está desatado).
 
@@ -68,7 +68,7 @@ Un jugador descubre ~3-6 sinergias por run según cómo construya su equipo.
 
 # SINERGIAS DE PARTIDO (SITUACIONALES)
 
-**"Remontada épica"** — Vas perdiendo por 2+ goles y marcas 2 goles en 5 jugadas consecutivas. Bonus: momentum sube a +5 instantáneo (el máximo) y la racha de partido se activa automáticamente en 5.
+**"Remontada épica"** — Vas perdiendo por 2+ goles y marcas 2 goles en 5 jugadas consecutivas. Bonus: momentum sube a +5 instantáneo (el máximo), activando el jugador "en la zona" y la carta "Jugada perfecta".
 
 **"El muro del descuento"** — En el descuento, vas ganando por 1 gol, y tu portero para 2+ tiros consecutivos. Bonus: el portero gana +2 influencia el resto del descuento y +2 CA permanente post-partido.
 
@@ -76,7 +76,7 @@ Un jugador descubre ~3-6 sinergias por run según cómo construya su equipo.
 
 **"Dominio total"** — Ganas un partido sin que el rival llegue nunca a tu franja de Área (0 tiros rivales en el Área). Bonus: +5 Legado y toda la defensa gana +1 CA permanente.
 
-**"El partido perfecto"** — Racha de 10+ en un partido (nunca pierdes un duelo durante 10 consecutivos). Bonus: el jugador más activo de la racha gana el rasgo "Leyenda del partido" (temporal, +1 influencia durante 5 partidos).
+**"El partido perfecto"** — 10+ duelos ganados consecutivamente en un partido (sin perder ninguno). Bonus: el jugador más activo de la secuencia gana el rasgo "Leyenda del partido" (temporal, +1 influencia durante 5 partidos).
 
 ---
 
