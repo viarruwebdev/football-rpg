@@ -81,8 +81,13 @@ export function detectThresholdCrossing(
 		}
 	}
 
-	// Resets: thresholds that were active in `before` but the bar has now
-	// dropped below the next threshold down, re-enabling a future re-fire.
+	// Resets: re-arm the one-shot when the bar drops STRICTLY below a crossed
+	// threshold. `< threshold` (not `<=`) is intentional: a bar that lands exactly
+	// on the threshold value (e.g. 4 → 3 after degradation) is still "at or above"
+	// it, so the one-shot stays spent. Only when the bar moves to 2.5 or lower does
+	// the threshold become crossable again on the next ascent.
+	// Changing this to `<=` would be a correctness bug: bar exactly at +3 would
+	// re-arm immediately, firing the one-shot again on the very next +0.5 step.
 	for (const threshold of beforeState.crossedThresholds) {
 		if (threshold > 0 && barAfter < threshold) {
 			resets.push({ side: movedSide, threshold });

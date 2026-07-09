@@ -218,6 +218,8 @@ Comprobación de jerarquía (cifras exactas del manual, no recalcular de memoria
 
 Estos son el grueso del efecto visible del momentum. No son sostenidos; se disparan **una vez** al cruzar el umbral. Simétricos en negativo.
 
+**Re-armado del one-shot:** el efecto se re-arma (puede dispararse de nuevo) solo cuando la barra cae **estrictamente por debajo** del valor del umbral (condición `barAfter < threshold`, no `<=`). Una barra que aterriza exactamente en el umbral (ej. +4 → +3 por degradación) sigue contando como "cruzado": el one-shot permanece gastado y no se vuelve a disparar en el siguiente +0.5. Solo cuando la barra llega a +2.5 o menos se re-arma el umbral +3. **No cambies `<` a `<=` pensando que es un off-by-one: es semántica intencional.**
+
 | Umbral | Bonus positivo | Bonus negativo |
 |---|---|---|
 | +3 / -3 | Tu siguiente carta +1 potencia (un duelo) | Tu siguiente carta -1 potencia |

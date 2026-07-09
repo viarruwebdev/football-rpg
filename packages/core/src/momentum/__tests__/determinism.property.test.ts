@@ -5,7 +5,7 @@ import {
 	applyDuelResult,
 	applyEvent,
 	createMatchMomentumState,
-	degradeMomentum,
+	degradeAndDetect,
 	updateMomentum,
 } from '../index';
 import type { MatchMomentumState, MomentumEventCause, MomentumSide } from '../types';
@@ -62,11 +62,10 @@ function runSequence(steps: Step[]): MatchMomentumState {
 			const barState = applyDuelResult(match[step.side], step.segment);
 			match = updateMomentum(match, step.side, barState).match;
 		} else {
-			const barState = degradeMomentum(match[step.side], {
+			match = degradeAndDetect(match, step.side, {
 				hadSignificantEventOrWin: step.hadSignificantEventOrWin,
 				determinationAverage: step.determinationAverage,
-			});
-			match = { ...match, [step.side]: barState };
+			}).match;
 		}
 	}
 	return match;

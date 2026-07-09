@@ -6,20 +6,21 @@ import type {
 	MomentumSide,
 	MomentumState,
 	ThresholdEffect,
+	ThresholdReset,
 } from './types';
 
 export function updateMomentum(
 	match: MatchMomentumState,
 	movedSide: MomentumSide,
 	newBarState: MomentumState,
-): { match: MatchMomentumState; effects: ThresholdEffect[] } {
+): { match: MatchMomentumState; effects: ThresholdEffect[]; resets: ThresholdReset[] } {
 	const after: MatchMomentumState = { ...match, [movedSide]: newBarState };
 	const { effects, resets } = detectThresholdCrossing(match, after, movedSide);
 
 	const home = applyThresholdEffects(after.home, effects, resets, 'home');
 	const away = applyThresholdEffects(after.away, effects, resets, 'away');
 
-	return { match: { home, away }, effects };
+	return { match: { home, away }, effects, resets };
 }
 
 /** Orchestrates degradation + threshold detection for one side.
@@ -30,7 +31,7 @@ export function degradeAndDetect(
 	match: MatchMomentumState,
 	side: MomentumSide,
 	context: DegradationContext,
-): { match: MatchMomentumState; effects: ThresholdEffect[] } {
+): { match: MatchMomentumState; effects: ThresholdEffect[]; resets: ThresholdReset[] } {
 	const newBarState = degradeMomentum(match[side], context);
 	return updateMomentum(match, side, newBarState);
 }

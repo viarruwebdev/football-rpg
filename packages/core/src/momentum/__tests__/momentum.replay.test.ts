@@ -67,10 +67,7 @@ function replayEvent(
 	log: ReplayStep[],
 ): MatchMomentumState {
 	const barState = applyEvent(match[side], cause);
-	const { match: next, effects } = updateMomentum(match, side, barState);
-	// resets are inside detectThresholdCrossing but not returned by updateMomentum;
-	// reconstruct them by comparing crossedThresholds before/after.
-	const resets = computeResets(match[side], next[side], side);
+	const { match: next, effects, resets } = updateMomentum(match, side, barState);
 	log.push({ op: `${side}.event(${cause})`, ...serializeMatch(next), effects, resets });
 	return next;
 }
@@ -82,8 +79,7 @@ function replayDuel(
 	log: ReplayStep[],
 ): MatchMomentumState {
 	const barState = applyDuelResult(match[side], segment);
-	const { match: next, effects } = updateMomentum(match, side, barState);
-	const resets = computeResets(match[side], next[side], side);
+	const { match: next, effects, resets } = updateMomentum(match, side, barState);
 	log.push({ op: `${side}.duel(${segment})`, ...serializeMatch(next), effects, resets });
 	return next;
 }
@@ -95,11 +91,14 @@ function replayDegrade(
 	determination: number,
 	log: ReplayStep[],
 ): MatchMomentumState {
-	const { match: next, effects } = degradeAndDetect(match, side, {
+	const {
+		match: next,
+		effects,
+		resets,
+	} = degradeAndDetect(match, side, {
 		hadSignificantEventOrWin: hadEventOrWin,
 		determinationAverage: determination,
 	});
-	const resets = computeResets(match[side], next[side], side);
 	log.push({
 		op: `${side}.degrade(hadEvent=${hadEventOrWin},det=${determination})`,
 		...serializeMatch(next),
@@ -107,24 +106,6 @@ function replayDegrade(
 		resets,
 	});
 	return next;
-}
-
-/**
- * Derive which thresholds were removed from crossedThresholds between two
- * consecutive states (i.e., the resets that updateMomentum applied).
- */
-function computeResets(
-	before: MomentumState,
-	after: MomentumState,
-	side: MomentumSide,
-): ThresholdReset[] {
-	const resets: ThresholdReset[] = [];
-	for (const t of before.crossedThresholds) {
-		if (!after.crossedThresholds.has(t)) {
-			resets.push({ side, threshold: t });
-		}
-	}
-	return resets;
 }
 
 // ---------------------------------------------------------------------------
