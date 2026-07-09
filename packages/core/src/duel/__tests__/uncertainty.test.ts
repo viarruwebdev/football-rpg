@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { makeRng } from '../../rng';
-import { computeBand, sampleTriangular } from '../uncertainty';
+import { computeBand, roundForBand, roundForClassify, sampleTriangular } from '../uncertainty';
 
 describe('computeBand', () => {
 	it.each([
@@ -35,6 +35,37 @@ describe('computeBand', () => {
 	it('uses a fixed band of 4 when both sides have a special technique', () => {
 		expect(computeBand(10, 18, true)).toBe(4);
 		expect(computeBand(0, 1, true)).toBe(4);
+	});
+});
+
+describe('roundForBand', () => {
+	it.each([
+		[4.4, 4],
+		[4.5, 5],
+		[4.6, 5],
+		[-0.3, 0],
+		[7.1, 7],
+	])('rounds %s to %i', (differential, expected) => {
+		// Math.round(-0.3) is JS's -0, numerically equal to 0 but not
+		// Object.is-equal — use == so the -0/+0 distinction doesn't fail
+		// an otherwise-correct rounding.
+		expect(roundForBand(differential) === expected).toBe(true);
+	});
+});
+
+describe('roundForClassify', () => {
+	it.each([
+		[5.4, 5],
+		[5.5, 6],
+		[5.6, 6],
+		[0.4, 0],
+		[0.5, 1],
+	])('rounds %s to %i', (result, expected) => {
+		expect(roundForClassify(result) === expected).toBe(true);
+	});
+
+	it('rounds -0.5 to 0, not -1 (JS Math.round semantics, documented behavior)', () => {
+		expect(roundForClassify(-0.5) === 0).toBe(true);
 	});
 });
 

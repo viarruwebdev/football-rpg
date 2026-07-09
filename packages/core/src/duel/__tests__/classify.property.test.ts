@@ -21,4 +21,13 @@ describe('classify coverage (CE-005, invariant 6)', () => {
 			}),
 		);
 	});
+
+	it('every fractional Resultado (momentum-ready) falls into exactly one segment', () => {
+		fc.assert(
+			fc.property(fc.double({ min: -15, max: 15, noNaN: true }), (result) => {
+				const segment = classify(result);
+				expect(SEGMENTS).toContain(segment);
+			}),
+		);
+	});
 });

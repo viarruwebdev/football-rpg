@@ -22,6 +22,22 @@ function composureAdjustment(composure: number): number {
 	return 1;
 }
 
+// Momentum (feature 003) contributes fractional strength (+0.15/point, capped
+// ±0.75), so differential can arrive as a non-integer. Band selection still
+// operates on integer tramos (0-4 / 5-6 / 7+), so we round once, here, before
+// comparing.
+export function roundForBand(differential: number): number {
+	return Math.round(differential);
+}
+
+// Same rationale as roundForBand: classify (duel and shot) compares the final
+// Resultado against integer thresholds. Math.round(-0.5) is 0, not -1 — a
+// Resultado of exactly -0.5 rounds toward splitBall/greatSave, not the loss
+// segment below it. This is the documented, intended behavior (see tests).
+export function roundForClassify(result: number): number {
+	return Math.round(result);
+}
+
 export function computeBand(
 	differential: number,
 	attackerComposure: number,
@@ -30,7 +46,7 @@ export function computeBand(
 	if (bothSidesHaveSpecialTechnique) {
 		return SPECIAL_TECHNIQUE_BAND;
 	}
-	const base = dynamicBand(Math.abs(differential));
+	const base = dynamicBand(Math.abs(roundForBand(differential)));
 	const adjusted = base + composureAdjustment(attackerComposure);
 	return Math.max(adjusted, BAND_FLOOR);
 }

@@ -10,4 +10,4 @@ export type {
 	Lane,
 	SpecialTechniqueId,
 } from './types';
-export { computeBand, sampleTriangular } from './uncertainty';
+export { computeBand, roundForBand, roundForClassify, sampleTriangular } from './uncertainty';

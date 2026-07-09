@@ -1,11 +1,13 @@
 import type { DuelSegment } from './types';
+import { roundForClassify } from './uncertainty';
 
 export function classify(result: number): DuelSegment {
-	if (result >= 6) return 'crushingSuccess';
-	if (result >= 3) return 'cleanSuccess';
-	if (result >= 1) return 'forcedAdvance';
-	if (result === 0) return 'splitBall';
-	if (result >= -2) return 'simpleLoss';
-	if (result >= -5) return 'disadvantagedLoss';
+	const rounded = roundForClassify(result);
+	if (rounded >= 6) return 'crushingSuccess';
+	if (rounded >= 3) return 'cleanSuccess';
+	if (rounded >= 1) return 'forcedAdvance';
+	if (rounded === 0) return 'splitBall';
+	if (rounded >= -2) return 'simpleLoss';
+	if (rounded >= -5) return 'disadvantagedLoss';
 	return 'devastatingCounter';
 }

@@ -1,7 +1,7 @@
 import fc from 'fast-check';
 import { describe, expect, it } from 'vitest';
 import { makeRng } from '../../rng';
-import { computeBand, sampleTriangular } from '../uncertainty';
+import { computeBand, roundForBand, sampleTriangular } from '../uncertainty';
 
 describe('computeBand floor (CE-004, invariant 3)', () => {
 	it('never returns less than 3', () => {
@@ -13,6 +13,28 @@ describe('computeBand floor (CE-004, invariant 3)', () => {
 					expect(computeBand(diff, composure, false)).toBeGreaterThanOrEqual(3);
 				},
 			),
+		);
+	});
+
+	it('never returns less than 3 for fractional differentials (momentum-ready)', () => {
+		fc.assert(
+			fc.property(
+				fc.double({ min: -50, max: 50, noNaN: true }),
+				fc.integer({ min: 1, max: 20 }),
+				(diff, composure) => {
+					expect(computeBand(diff, composure, false)).toBeGreaterThanOrEqual(3);
+				},
+			),
+		);
+	});
+});
+
+describe('roundForBand (momentum-ready rounding)', () => {
+	it('always produces an integer for any fractional differential', () => {
+		fc.assert(
+			fc.property(fc.double({ min: -15, max: 15, noNaN: true }), (differential) => {
+				expect(Number.isInteger(roundForBand(differential))).toBe(true);
+			}),
 		);
 	});
 });

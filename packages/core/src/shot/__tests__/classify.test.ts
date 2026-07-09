@@ -1,3 +1,4 @@
+import fc from 'fast-check';
 import { describe, expect, it } from 'vitest';
 import { classifyShot } from '../classify';
 import type { ShotSegment } from '../types';
@@ -36,5 +37,21 @@ describe('classifyShot', () => {
 			const seg = classifyShot(r);
 			expect(segments).toContain(seg);
 		}
+	});
+
+	it('covers every fractional Resultado (momentum-ready) with exactly one segment', () => {
+		const segments: ShotSegment[] = [
+			'unstoppableGoal',
+			'goal',
+			'goalOnRebound',
+			'greatSave',
+			'solidSave',
+			'counterattackSave',
+		];
+		fc.assert(
+			fc.property(fc.double({ min: -15, max: 15, noNaN: true }), (result) => {
+				expect(segments).toContain(classifyShot(result));
+			}),
+		);
 	});
 });
