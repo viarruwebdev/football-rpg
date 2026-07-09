@@ -1,0 +1,20 @@
+export { degradeMomentum } from './degradation';
+export { applyDuelResult } from './duelResult';
+export { applyEvent } from './events';
+export { computeMomentumModifier } from './modifier';
+export { createMatchMomentumState, createMomentumState } from './state';
+export { applyThresholdEffects, detectThresholdCrossing } from './thresholds';
+export type {
+	DegradationContext,
+	MatchMomentumState,
+	MomentumEventCause,
+	MomentumSide,
+	MomentumState,
+	MomentumThreshold,
+	PlayerInTheZone,
+	ThresholdEffect,
+	ThresholdReset,
+	TraitHook,
+	TraitHookContext,
+} from './types';
+export { updateMomentum } from './updateMomentum';
