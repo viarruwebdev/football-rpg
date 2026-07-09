@@ -141,6 +141,7 @@ Este repo usa **GitHub Spec Kit**. El flujo por feature es:
 - No generar este archivo con un LLM: se mantiene a mano (los archivos de contexto auto-generados envejecen mal).
 - No escribir código escrito en español. Todo el código va en inglés.
 - Cuando se derogue una regla del manual, buscar y eliminar sus copias en skills, specs, data-model y código — no solo en la fuente. Un dato derogado sobrevive en cada copia hasta que alguien la audita.
+- Un golden replay generado sobre código con un bug convierte el bug en el contrato. Antes de congelar snapshots, verifica que el comportamiento capturado es el que la spec exige — no solo que es reproducible. Al corregir un bug con goldens existentes: arregla primero, regenera después, y lee el diff del snapshot.
 
 ## 11. Referencias
 
