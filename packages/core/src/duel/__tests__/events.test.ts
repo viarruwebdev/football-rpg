@@ -3,11 +3,10 @@ import { emitEvents } from '../events';
 import type { DuelSegment } from '../types';
 
 describe('emitEvents', () => {
-	it('crushingSuccess -> advance + cardSteal + momentum(attack, +1)', () => {
+	it('crushingSuccess -> advance + cardSteal', () => {
 		expect(emitEvents('crushingSuccess')).toEqual([
 			{ type: 'advance', side: 'attack' },
 			{ type: 'cardSteal', side: 'attack' },
-			{ type: 'momentum', side: 'attack', delta: 1 },
 		]);
 	});
 
@@ -30,18 +29,14 @@ describe('emitEvents', () => {
 		expect(emitEvents('simpleLoss')).toEqual([{ type: 'transition' }]);
 	});
 
-	it('disadvantagedLoss -> transition + momentum(defense, +1)', () => {
-		expect(emitEvents('disadvantagedLoss')).toEqual([
-			{ type: 'transition' },
-			{ type: 'momentum', side: 'defense', delta: 1 },
-		]);
+	it('disadvantagedLoss -> transition', () => {
+		expect(emitEvents('disadvantagedLoss')).toEqual([{ type: 'transition' }]);
 	});
 
-	it('devastatingCounter -> transition + cardSteal(defense) + momentum(defense, +2)', () => {
+	it('devastatingCounter -> transition + cardSteal(defense)', () => {
 		expect(emitEvents('devastatingCounter')).toEqual([
 			{ type: 'transition' },
 			{ type: 'cardSteal', side: 'defense' },
-			{ type: 'momentum', side: 'defense', delta: 2 },
 		]);
 	});
 

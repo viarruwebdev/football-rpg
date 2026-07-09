@@ -1,11 +1,9 @@
 {
-	"name": "@football-rpg/core",
+	"name": "@football-rpg/content",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
 	"main": "./src/index.ts",
 	"types": "./src/index.ts",
-	"dependencies": {
-		"@football-rpg/content": "workspace:*"
-	}
+	"dependencies": {}
 }

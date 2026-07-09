@@ -64,10 +64,10 @@ Característica: Resolución de un duelo de eslabón normal
       | -4        | Pérdida con desventaja |
       | -6        | Contragolpe devastador |
 
-  Escenario: un éxito aplastante emite el evento de momentum pero no lo aplica
+  Escenario: un éxito aplastante no emite evento de momentum (lo deriva la 003 del tramo)
     Dado un duelo cuyo Resultado es +6 o más
     Cuando lo resuelvo
-    Entonces se emite un evento de momentum "+1 atacante"
+    Entonces no se emite ningún evento de tipo "momentum"
     Y el resolvedor no modifica por sí mismo la barra de momentum
 
   Escenario: un balón dividido señala que requiere mini-duelo

@@ -11,11 +11,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
       "side": "attack",
       "type": "cardSteal",
     },
-    {
-      "delta": 1,
-      "side": "attack",
-      "type": "momentum",
-    },
   ],
   "result": 9,
   "segment": "crushingSuccess",
@@ -31,11 +26,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
     {
       "side": "defense",
       "type": "cardSteal",
-    },
-    {
-      "delta": 2,
-      "side": "defense",
-      "type": "momentum",
     },
   ],
   "result": -23,
@@ -54,11 +44,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
       "side": "attack",
       "type": "cardSteal",
     },
-    {
-      "delta": 1,
-      "side": "attack",
-      "type": "momentum",
-    },
   ],
   "result": 10,
   "segment": "crushingSuccess",
@@ -76,11 +61,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
       "side": "attack",
       "type": "cardSteal",
     },
-    {
-      "delta": 1,
-      "side": "attack",
-      "type": "momentum",
-    },
   ],
   "result": 13,
   "segment": "crushingSuccess",
@@ -96,11 +76,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
     {
       "side": "defense",
       "type": "cardSteal",
-    },
-    {
-      "delta": 2,
-      "side": "defense",
-      "type": "momentum",
     },
   ],
   "result": -8,
@@ -148,11 +123,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
       "side": "attack",
       "type": "cardSteal",
     },
-    {
-      "delta": 1,
-      "side": "attack",
-      "type": "momentum",
-    },
   ],
   "result": 24,
   "segment": "crushingSuccess",
@@ -183,11 +153,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
       "side": "attack",
       "type": "cardSteal",
     },
-    {
-      "delta": 1,
-      "side": "attack",
-      "type": "momentum",
-    },
   ],
   "result": 11,
   "segment": "crushingSuccess",
@@ -205,11 +170,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "defense",
         "type": "cardSteal",
       },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
-      },
     ],
     "result": -11,
     "segment": "devastatingCounter",
@@ -223,11 +183,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "defense",
         "type": "cardSteal",
       },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
-      },
     ],
     "result": -12,
     "segment": "devastatingCounter",
@@ -236,11 +191,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
     "events": [
       {
         "type": "transition",
-      },
-      {
-        "delta": 1,
-        "side": "defense",
-        "type": "momentum",
       },
     ],
     "result": -3,
@@ -255,11 +205,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "defense",
         "type": "cardSteal",
       },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
-      },
     ],
     "result": -7,
     "segment": "devastatingCounter",
@@ -272,11 +217,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
       {
         "side": "defense",
         "type": "cardSteal",
-      },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
       },
     ],
     "result": -10,
@@ -291,11 +231,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "defense",
         "type": "cardSteal",
       },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
-      },
     ],
     "result": -8,
     "segment": "devastatingCounter",
@@ -308,11 +243,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
       {
         "side": "defense",
         "type": "cardSteal",
-      },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
       },
     ],
     "result": -6,
@@ -340,11 +270,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
     "events": [
       {
         "type": "transition",
-      },
-      {
-        "delta": 1,
-        "side": "defense",
-        "type": "momentum",
       },
     ],
     "result": -5,
@@ -382,11 +307,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "defense",
         "type": "cardSteal",
       },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
-      },
     ],
     "result": -9,
     "segment": "devastatingCounter",
@@ -399,11 +319,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
       {
         "side": "defense",
         "type": "cardSteal",
-      },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
       },
     ],
     "result": -10,
@@ -427,11 +342,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "defense",
         "type": "cardSteal",
       },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
-      },
     ],
     "result": -8,
     "segment": "devastatingCounter",
@@ -444,11 +354,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
       {
         "side": "defense",
         "type": "cardSteal",
-      },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
       },
     ],
     "result": -11,
@@ -463,11 +368,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "defense",
         "type": "cardSteal",
       },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
-      },
     ],
     "result": -8,
     "segment": "devastatingCounter",
@@ -480,11 +380,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
       {
         "side": "defense",
         "type": "cardSteal",
-      },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
       },
     ],
     "result": -6,
@@ -512,11 +407,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
     "events": [
       {
         "type": "transition",
-      },
-      {
-        "delta": 1,
-        "side": "defense",
-        "type": "momentum",
       },
     ],
     "result": -5,
@@ -549,11 +439,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "defense",
         "type": "cardSteal",
       },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
-      },
     ],
     "result": -10,
     "segment": "devastatingCounter",
@@ -567,11 +452,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "defense",
         "type": "cardSteal",
       },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
-      },
     ],
     "result": -11,
     "segment": "devastatingCounter",
@@ -580,11 +460,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
     "events": [
       {
         "type": "transition",
-      },
-      {
-        "delta": 1,
-        "side": "defense",
-        "type": "momentum",
       },
     ],
     "result": -3,
@@ -599,11 +474,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "defense",
         "type": "cardSteal",
       },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
-      },
     ],
     "result": -6,
     "segment": "devastatingCounter",
@@ -616,11 +486,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
       {
         "side": "defense",
         "type": "cardSteal",
-      },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
       },
     ],
     "result": -9,
@@ -635,11 +500,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "defense",
         "type": "cardSteal",
       },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
-      },
     ],
     "result": -7,
     "segment": "devastatingCounter",
@@ -653,11 +513,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "defense",
         "type": "cardSteal",
       },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
-      },
     ],
     "result": -7,
     "segment": "devastatingCounter",
@@ -666,11 +521,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
     "events": [
       {
         "type": "transition",
-      },
-      {
-        "delta": 1,
-        "side": "defense",
-        "type": "momentum",
       },
     ],
     "result": -3,
@@ -689,11 +539,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
     "events": [
       {
         "type": "transition",
-      },
-      {
-        "delta": 1,
-        "side": "defense",
-        "type": "momentum",
       },
     ],
     "result": -5,
@@ -726,11 +571,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "defense",
         "type": "cardSteal",
       },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
-      },
     ],
     "result": -10,
     "segment": "devastatingCounter",
@@ -744,11 +584,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "defense",
         "type": "cardSteal",
       },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
-      },
     ],
     "result": -11,
     "segment": "devastatingCounter",
@@ -757,11 +592,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
     "events": [
       {
         "type": "transition",
-      },
-      {
-        "delta": 1,
-        "side": "defense",
-        "type": "momentum",
       },
     ],
     "result": -3,
@@ -776,11 +606,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "defense",
         "type": "cardSteal",
       },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
-      },
     ],
     "result": -7,
     "segment": "devastatingCounter",
@@ -793,11 +618,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
       {
         "side": "defense",
         "type": "cardSteal",
-      },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
       },
     ],
     "result": -10,
@@ -812,11 +632,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "defense",
         "type": "cardSteal",
       },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
-      },
     ],
     "result": -8,
     "segment": "devastatingCounter",
@@ -825,11 +640,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
     "events": [
       {
         "type": "transition",
-      },
-      {
-        "delta": 1,
-        "side": "defense",
-        "type": "momentum",
       },
     ],
     "result": -5,
@@ -862,11 +672,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "defense",
         "type": "cardSteal",
       },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
-      },
     ],
     "result": -6,
     "segment": "devastatingCounter",
@@ -875,11 +680,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
     "events": [
       {
         "type": "transition",
-      },
-      {
-        "delta": 1,
-        "side": "defense",
-        "type": "momentum",
       },
     ],
     "result": -3,
@@ -903,11 +703,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "defense",
         "type": "cardSteal",
       },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
-      },
     ],
     "result": -10,
     "segment": "devastatingCounter",
@@ -920,11 +715,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
       {
         "side": "defense",
         "type": "cardSteal",
-      },
-      {
-        "delta": 2,
-        "side": "defense",
-        "type": "momentum",
       },
     ],
     "result": -11,
@@ -944,11 +734,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
       {
         "side": "attack",
         "type": "cardSteal",
-      },
-      {
-        "delta": 1,
-        "side": "attack",
-        "type": "momentum",
       },
     ],
     "result": 7,
@@ -974,11 +759,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "attack",
         "type": "cardSteal",
       },
-      {
-        "delta": 1,
-        "side": "attack",
-        "type": "momentum",
-      },
     ],
     "result": 8,
     "segment": "crushingSuccess",
@@ -992,11 +772,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
       {
         "side": "attack",
         "type": "cardSteal",
-      },
-      {
-        "delta": 1,
-        "side": "attack",
-        "type": "momentum",
       },
     ],
     "result": 10,
@@ -1015,11 +790,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
     "events": [
       {
         "type": "transition",
-      },
-      {
-        "delta": 1,
-        "side": "defense",
-        "type": "momentum",
       },
     ],
     "result": -3,
@@ -1091,11 +861,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "attack",
         "type": "cardSteal",
       },
-      {
-        "delta": 1,
-        "side": "attack",
-        "type": "momentum",
-      },
     ],
     "result": 7,
     "segment": "crushingSuccess",
@@ -1109,11 +874,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
       {
         "side": "attack",
         "type": "cardSteal",
-      },
-      {
-        "delta": 1,
-        "side": "attack",
-        "type": "momentum",
       },
     ],
     "result": 7,
@@ -1139,11 +899,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
         "side": "attack",
         "type": "cardSteal",
       },
-      {
-        "delta": 1,
-        "side": "attack",
-        "type": "momentum",
-      },
     ],
     "result": 8,
     "segment": "crushingSuccess",
@@ -1157,11 +912,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
       {
         "side": "attack",
         "type": "cardSteal",
-      },
-      {
-        "delta": 1,
-        "side": "attack",
-        "type": "momentum",
       },
     ],
     "result": 10,
@@ -1180,11 +930,6 @@ exports[`golden replay — packages/core/src/duel/__tests__/__snapshots__/replay
     "events": [
       {
         "type": "transition",
-      },
-      {
-        "delta": 1,
-        "side": "defense",
-        "type": "momentum",
       },
     ],
     "result": -3,
