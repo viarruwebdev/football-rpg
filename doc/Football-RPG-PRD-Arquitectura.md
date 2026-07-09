@@ -88,7 +88,7 @@ No como competidores de negocio, sino como **fuentes de patrones de ingeniería*
 
 **v1 — "La run jugable" (MVP vertical, el corazón).** El objetivo de la v1 no es el ancho del manual, sino una *rebanada vertical* completa que demuestre el bucle:
 
-- Motor de partido completo en **Modo Completo** (duelo por duelo): cadena de ataque, defensa con mind-game de carril, tabla de resolución (§6 del manual), momentum/energía/fatiga, remates y portero, balón dividido, prórroga y penaltis.
+- Motor de partido completo en **Modo Completo** (duelo por duelo): cadena de ataque, defensa con mind-game de carril, tabla de resolución (§6), momentum unificado con racha integrada (§7), energía/fatiga, remates y portero, balón dividido, prórroga y penaltis.
 - Un subconjunto de cartas **suficiente y representativo** (Base + Avanzada de las categorías nucleares: pases, regates, tiros, centros, defensa, portero, instantes, tácticas). Las Élite/técnicas especiales/combinadas pueden llegar en v1.1 sin cambiar la arquitectura.
 - Sistema táctico mínimo viable: 3-4 formaciones, 3-4 estilos, roles esenciales por posición.
 - Un rival IA funcional con al menos 3-4 perfiles tácticos (§28).
@@ -204,10 +204,10 @@ No como competidores de negocio, sino como **fuentes de patrones de ingeniería*
 
 Estas son *invariantes del dominio* que el motor debe garantizar. Cada una es candidata a test unitario:
 
-- **RN-01 (topes de bonus):** ningún duelo acumula más de `+5` de bonus por modificadores externos (momentum + estilo + rol + química + …). El exceso se ignora. El bonus de transición también se capea a `+5`.
+- **RN-01 (topes de bonus):** ningún duelo acumula más de `+5` de bonus por modificadores externos (estilo + rol + química + condiciones + …). El exceso se ignora. El bonus de transición también se capea a `+5`. **El momentum tiene su propio cap duro de ±0.75** (+0.15/punto, ver RN-04), que se aplica antes de entrar en el bruto acumulado; no cuenta contra el tope de +5 genérico.
 - **RN-02 (potencia íntegra):** la potencia de la carta, la influencia del atributo y el carril **no** entran en rendimientos decrecientes; se aplican íntegros. Todo lo demás (momentum, First Touch, estilo, rol, química, presión, condiciones) sí.
 - **RN-03 (fase de carta):** una carta se juega en su fase natural (A/D/A-D/I/P). Fuera de fase: improvisada (potencia 0, no gasta carta) o reconvertida (potencia mitad redondeada abajo, gasta carta). El portero improvisado sólo tiene Parada básica.
-- **RN-04 (momentum acotado):** barra `-5..+5`; efecto lineal `+0.5` por punto con techo `+2` a partir de `+4`. Se mueve sólo por la lista cerrada de eventos (§7 del manual). Degradación asimétrica (negativo se recupera más rápido; Determination lo acelera).
+- **RN-04 (momentum unificado, §7):** barra fraccional `-5..+5` en pasos de `0.5`. Efecto continuo: `+0.15` de Fuerza por punto, **cap duro `±0.75`** (se aplica antes de rendimientos decrecientes). Se mueve por dos tablas excluyentes: eventos significativos (goles, paradas, robos, racha de posesión, paradón estándar) y resultados de duelo (duelos ganados consecutivos `+0.5`, pérdidas `-1` a `-2`; tramo más específico, no acumulan). Bonus por umbrales (one-shot, capa de cartas): `+3` → +1 potencia; `+4` → robar 1 carta; `+5` → jugador "en la zona" (+1 influencia individual, sobrevive al descenso) + carta Jugada perfecta. Degradación asimétrica: positivo `-1` sin evento ni duelo ganado; negativo `-1` cada posesión; Determination 16+ acelera. Se registra el máximo alcanzado para bonus post-partido.
 - **RN-05 (fatiga individual):** sólo suma cuando el humano **elige activamente** al jugador del pool (aparecer sin ser elegido no fatiga). Umbral = Stamina ajustada; superar el umbral resta `-1` a todos los atributos por cada 2 de exceso.
 - **RN-06 (tarjetas):** 5 amarillas acumuladas = 1 partido de suspensión (se resetea el contador tras cumplirla). Roja directa = 2-3 partidos sin resetear amarillas.
 - **RN-07 (normas de plantilla):** exactamente 23 jugadores, ≥3 porteros, ≥4 canteranos. Incumplir en draft ⇒ plantilla incompleta + penalización de posición de draft.
@@ -952,7 +952,8 @@ type DomainEvent =
   | { type: 'DuelResolved'; outcome: DuelOutcome; link: LinkRef }
   | { type: 'BallAdvanced'; from: Zone; to: Zone; lane: Lane }
   | { type: 'Goal'; scorer: PlayerRef; special?: boolean }
-  | { type: 'MomentumChanged'; delta: number; value: number }
+  | { type: 'MomentumChanged'; side: TeamSide; cause: MomentumCause }
+  | { type: 'MomentumUpdated'; bar: [number, number]; modifier: [number, number] }
   | { type: 'CardPlayed'; card: CardRef; by: PlayerRef; phase: Phase }
   | { type: 'FoulCommitted'; card?: 'yellow' | 'red'; by: PlayerRef }
   | { type: 'Injury'; player: PlayerRef; severity: InjurySeverity }
@@ -1234,7 +1235,7 @@ Balance afinado por datos de simulación; accesibilidad AA; animaciones de drama
 - **Jugada (del reloj):** unidad de tiempo del partido; el reloj es compartido entre ambos equipos (~64-68 por partido).
 - **Franja / Carril:** el campo abstracto = 4 franjas (Defensa/Medio/Ataque/Área) × 3 carriles (izq/centro/der).
 - **Sub-mazo:** el mazo se divide en ataque (~18-20), defensa (~10-12) y compartido (~6-8); el portero tiene set propio.
-- **Momentum:** barra bipolar `-5..+5` que da bonus/penalización de fuerza; se mueve sólo por eventos significativos.
+- **Momentum:** barra bipolar fraccional `-5..+5` (pasos de 0.5) que da un modificador de Fuerza (+0.15/punto, cap ±0.75) y bonus one-shot por umbrales (+3/+4/+5). Se mueve por eventos significativos y por resultados de duelo (§7 unificado). Degradación asimétrica.
 - **Energía:** recurso táctico global del equipo (base 12) para técnicas especiales y forzar situaciones.
 - **Fatiga:** desgaste físico *individual*; superar el umbral (≈ Stamina) penaliza atributos.
 - **CA / PA:** Current Ability / Potential Ability (estilo FM); CA es lo que el jugador es hoy, PA su techo.
