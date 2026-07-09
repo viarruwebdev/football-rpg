@@ -2,6 +2,7 @@ export { degradeMomentum } from './degradation';
 export { applyDuelResult } from './duelResult';
 export { applyEvent } from './events';
 export { computeMomentumModifier } from './modifier';
+export { shotSegmentToMomentumCause } from './shotCause';
 export { createMatchMomentumState, createMomentumState } from './state';
 export { applyThresholdEffects, detectThresholdCrossing } from './thresholds';
 export type {

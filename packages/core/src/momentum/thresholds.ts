@@ -105,13 +105,20 @@ export function applyThresholdEffects(
 	resets: ThresholdReset[],
 	side: MomentumSide,
 ): MomentumState {
+	if (effects.length === 0 && resets.length === 0) return state;
+
 	const crossedThresholds = new Set(state.crossedThresholds);
 	let playerInTheZone = state.playerInTheZone;
 
 	for (const reset of resets) {
-		if (reset.side === side) {
-			crossedThresholds.delete(reset.threshold);
+		if (reset.side !== side) {
+			// detectThresholdCrossing only emits resets for the moved side; a reset
+			// for the opposite side here would indicate a bug in the caller.
+			throw new Error(
+				`applyThresholdEffects(${side}): received reset for opposite side '${reset.side}'`,
+			);
 		}
+		crossedThresholds.delete(reset.threshold);
 	}
 
 	for (const effect of effects) {

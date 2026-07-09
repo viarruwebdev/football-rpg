@@ -17,8 +17,21 @@ export function updateMomentum(
 	const after: MatchMomentumState = { ...match, [movedSide]: newBarState };
 	const { effects, resets } = detectThresholdCrossing(match, after, movedSide);
 
-	const home = applyThresholdEffects(after.home, effects, resets, 'home');
-	const away = applyThresholdEffects(after.away, effects, resets, 'away');
+	// Each side only receives effects/resets that target it. detectThresholdCrossing
+	// emits resets exclusively for movedSide, but effects may target either side
+	// (e.g. rivalTrough emits enteredTheZone for the opposite side).
+	const home = applyThresholdEffects(
+		after.home,
+		effects,
+		resets.filter((r) => r.side === 'home'),
+		'home',
+	);
+	const away = applyThresholdEffects(
+		after.away,
+		effects,
+		resets.filter((r) => r.side === 'away'),
+		'away',
+	);
 
 	return { match: { home, away }, effects, resets };
 }

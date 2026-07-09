@@ -224,9 +224,11 @@ Estos son el grueso del efecto visible del momentum. No son sostenidos; se dispa
 |---|---|---|
 | +3 / -3 | Tu siguiente carta +1 potencia (un duelo) | Tu siguiente carta -1 potencia |
 | +4 / -4 | Robas 1 carta extra (una vez) | Robas 1 carta menos |
-| +5 / -5 | 1 jugador "en la zona": +1 influencia individual resto del partido (sobrevive aunque baje la barra; marca visual). Se desbloquea carta "Jugada perfecta" (potencia 6, 1 uso) | 1 jugador **rival** entra "en la zona" (mismo efecto: +1 influencia individual, sobrevive). **NO desbloquea "Jugada perfecta"** — esa carta es exclusiva del +5 propio, sin contraparte en -5 (asimetría deliberada, no simétrica como ±3/±4). |
+| +5 / -5 | Dos efectos independientes: (1) **`enteredTheZone`** — 1 jugador "en la zona": +1 influencia individual resto del partido (sobrevive aunque baje la barra; **slot único por equipo, nunca re-arma**). (2) **`perfectPlayUnlocked`** — desbloquea carta "Jugada perfecta" (potencia 6, 1 uso); **re-arma como ±3/±4**: si la barra cae por debajo de +5 y vuelve a cruzarlo, se vuelve a disparar. | 1 jugador **rival** entra "en la zona" (efecto `rivalTrough`; mismo slot único, no re-arma). **NO desbloquea "Jugada perfecta"** — esa carta es exclusiva del +5 propio, sin contraparte en -5 (asimetría deliberada). |
 
 "En la zona" es la **única** excepción donde el momentum toca influencia individual. Sobrevive al descenso de la barra.
+
+> **Resumen de re-armado en +5:** `enteredTheZone` es permanente (una vez por equipo por partido). `perfectPlayUnlocked` es re-armable (como ±3/±4). No los confundas: son dos efectos distintos dentro del mismo umbral.
 
 ### Bonus post-partido por momentum máximo
 
@@ -257,7 +259,7 @@ La barra se satura en **±5**; sumar por encima no la pasa de 5 ni por debajo de
 - Barra por equipo (fraccional, en pasos de 0.5, rango [-5, +5]).
 - Contador de duelos consecutivos ganados (por equipo, se resetea al perder).
 - Máximo alcanzado por equipo en el partido (para bonus post-partido).
-- Registro de umbrales cruzados (para los one-shot: +3/+4/+5 solo disparan una vez por cruce).
+- Registro de umbrales cruzados (para los one-shot: ±3/±4/+5`perfectPlayUnlocked` re-arman si la barra cae por debajo y vuelve a cruzar; `enteredTheZone` de +5/-5 es slot único por equipo y nunca re-arma).
 - Jugador "en la zona" (si se disparó +5; sobrevive al descenso).
 
 ### Interacción con rasgos (referencia, no implementar en 003-v1)
