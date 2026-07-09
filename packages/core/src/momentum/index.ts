@@ -17,4 +17,4 @@ export type {
 	TraitHook,
 	TraitHookContext,
 } from './types';
-export { updateMomentum } from './updateMomentum';
+export { degradeAndDetect, updateMomentum } from './updateMomentum';

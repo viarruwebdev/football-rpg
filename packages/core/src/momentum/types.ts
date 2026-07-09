@@ -48,8 +48,8 @@ export type MomentumEventCause =
 	| 'greatSave';
 
 export type ThresholdEffect =
-	| { type: 'cardPowerBonus'; side: MomentumSide; amount: 1 | -1 }
-	| { type: 'extraCardDraw'; side: MomentumSide; amount: 1 | -1 }
+	| { type: 'cardPowerBonus'; side: MomentumSide; amount: 1 | -1; threshold: 3 | -3 }
+	| { type: 'extraCardDraw'; side: MomentumSide; amount: 1 | -1; threshold: 4 | -4 }
 	| {
 			type: 'enteredTheZone';
 			side: MomentumSide;

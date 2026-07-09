@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { createMomentumState, degradeMomentum } from '../index';
+import {
+	applyEvent,
+	createMatchMomentumState,
+	createMomentumState,
+	degradeAndDetect,
+	degradeMomentum,
+	updateMomentum,
+} from '../index';
 import type { DegradationContext } from '../types';
 
 function context(overrides: Partial<DegradationContext> = {}): DegradationContext {
@@ -50,5 +57,38 @@ describe('degradeMomentum', () => {
 	it('maxReached does not change with degradation', () => {
 		const state = { ...createMomentumState(), bar: 3, maxReached: 4 };
 		expect(degradeMomentum(state, context()).maxReached).toBe(4);
+	});
+});
+
+// RF-008: degradation through a threshold re-arms the one-shot so it fires again
+// on the next upward crossing. This path was not covered before degradeAndDetect.
+describe('degradeAndDetect — threshold re-arm on degradation (RF-008)', () => {
+	it('after degrading below +3 the one-shot fires again when bar climbs back to +3', () => {
+		// Climb to +3 via events so the one-shot fires once (crossedThresholds = {3})
+		let match = createMatchMomentumState();
+		const barAt3 = applyEvent(match.home, 'goal'); // +2 → 2
+		match = updateMomentum(match, 'home', barAt3).match;
+		const barAt25 = applyEvent(match.home, 'possessionStreak'); // +1 → 3
+		const { match: atThreshold, effects: firstCross } = updateMomentum(match, 'home', barAt25);
+		expect(firstCross.some((e) => e.type === 'cardPowerBonus')).toBe(true);
+		expect(atThreshold.home.crossedThresholds.has(3)).toBe(true);
+
+		// Degrade below +3 — degradeAndDetect must emit a reset and clear crossedThresholds
+		const noEvent = { hadSignificantEventOrWin: false, determinationAverage: 10 };
+		const { match: degraded, effects: degrEffects } = degradeAndDetect(
+			atThreshold,
+			'home',
+			noEvent,
+		);
+		// Bar dropped to +2; crossedThresholds must no longer contain 3
+		expect(degraded.home.bar).toBe(2);
+		expect(degraded.home.crossedThresholds.has(3)).toBe(false);
+		// No upward threshold effect on degradation itself
+		expect(degrEffects.filter((e) => e.type === 'cardPowerBonus')).toHaveLength(0);
+
+		// Climb back to +3 — one-shot must fire again
+		const barBack = applyEvent(degraded.home, 'possessionStreak'); // +1 → 3
+		const { effects: secondCross } = updateMomentum(degraded, 'home', barBack);
+		expect(secondCross.some((e) => e.type === 'cardPowerBonus')).toBe(true);
 	});
 });

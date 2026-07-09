@@ -10,12 +10,11 @@ export function degradeMomentum(state: MomentumState, context: DegradationContex
 	const accelerated = context.determinationAverage >= DETERMINATION_THRESHOLD;
 
 	let newBar = bar;
+	const step = accelerated ? DETERMINATION_STEP : DEGRADATION_STEP;
 
 	if (bar > 0 && !context.hadSignificantEventOrWin) {
-		const step = accelerated ? DETERMINATION_STEP : DEGRADATION_STEP;
 		newBar = Math.max(0, bar - step);
 	} else if (bar < 0) {
-		const step = accelerated ? DETERMINATION_STEP : DEGRADATION_STEP;
 		newBar = Math.min(0, bar + step);
 	}
 

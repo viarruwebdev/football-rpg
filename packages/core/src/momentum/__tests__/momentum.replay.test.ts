@@ -16,7 +16,7 @@ import {
 	applyDuelResult,
 	applyEvent,
 	createMatchMomentumState,
-	degradeMomentum,
+	degradeAndDetect,
 	updateMomentum,
 } from '../index';
 import type {
@@ -95,20 +95,16 @@ function replayDegrade(
 	determination: number,
 	log: ReplayStep[],
 ): MatchMomentumState {
-	const prev = match[side];
-	const next_state = degradeMomentum(prev, {
+	const { match: next, effects } = degradeAndDetect(match, side, {
 		hadSignificantEventOrWin: hadEventOrWin,
 		determinationAverage: determination,
 	});
-	const next: MatchMomentumState = { ...match, [side]: next_state };
-	// degradation does NOT call updateMomentum (no threshold crossing on degrade)
-	// resets are not produced here by design — the bar moving down does not
-	// automatically re-arm thresholds; that happens via the updateMomentum path.
+	const resets = computeResets(match[side], next[side], side);
 	log.push({
 		op: `${side}.degrade(hadEvent=${hadEventOrWin},det=${determination})`,
 		...serializeMatch(next),
-		effects: [],
-		resets: [],
+		effects,
+		resets,
 	});
 	return next;
 }

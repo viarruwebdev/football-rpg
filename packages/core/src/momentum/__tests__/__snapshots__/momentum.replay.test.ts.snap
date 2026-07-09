@@ -57,6 +57,7 @@ exports[`replay 1 — ascent to +5 crossing all three positive thresholds > matc
       {
         "amount": 1,
         "side": "home",
+        "threshold": 3,
         "type": "cardPowerBonus",
       },
     ],
@@ -86,6 +87,7 @@ exports[`replay 1 — ascent to +5 crossing all three positive thresholds > matc
       {
         "amount": 1,
         "side": "home",
+        "threshold": 4,
         "type": "extraCardDraw",
       },
     ],
@@ -202,6 +204,7 @@ exports[`replay 2 — degradation from +3 to 0, never crossing zero > matches sn
       {
         "amount": 1,
         "side": "home",
+        "threshold": 3,
         "type": "cardPowerBonus",
       },
     ],
@@ -231,15 +234,18 @@ exports[`replay 2 — degradation from +3 to 0, never crossing zero > matches sn
     "home": {
       "bar": 2,
       "consecutiveWins": 2,
-      "crossedThresholds": [
-        3,
-      ],
+      "crossedThresholds": [],
       "maxReached": 3,
       "playerInTheZone": null,
       "playsAtPeakPositive": 0,
     },
     "op": "home.degrade(hadEvent=false,det=10)",
-    "resets": [],
+    "resets": [
+      {
+        "side": "home",
+        "threshold": 3,
+      },
+    ],
   },
   {
     "away": {
@@ -254,9 +260,7 @@ exports[`replay 2 — degradation from +3 to 0, never crossing zero > matches sn
     "home": {
       "bar": 1,
       "consecutiveWins": 2,
-      "crossedThresholds": [
-        3,
-      ],
+      "crossedThresholds": [],
       "maxReached": 3,
       "playerInTheZone": null,
       "playsAtPeakPositive": 0,
@@ -277,9 +281,7 @@ exports[`replay 2 — degradation from +3 to 0, never crossing zero > matches sn
     "home": {
       "bar": 0,
       "consecutiveWins": 2,
-      "crossedThresholds": [
-        3,
-      ],
+      "crossedThresholds": [],
       "maxReached": 3,
       "playerInTheZone": null,
       "playsAtPeakPositive": 0,
@@ -300,9 +302,7 @@ exports[`replay 2 — degradation from +3 to 0, never crossing zero > matches sn
     "home": {
       "bar": 0,
       "consecutiveWins": 2,
-      "crossedThresholds": [
-        3,
-      ],
+      "crossedThresholds": [],
       "maxReached": 3,
       "playerInTheZone": null,
       "playsAtPeakPositive": 0,
@@ -323,9 +323,7 @@ exports[`replay 2 — degradation from +3 to 0, never crossing zero > matches sn
     "home": {
       "bar": 0,
       "consecutiveWins": 2,
-      "crossedThresholds": [
-        3,
-      ],
+      "crossedThresholds": [],
       "maxReached": 3,
       "playerInTheZone": null,
       "playsAtPeakPositive": 0,
@@ -372,6 +370,7 @@ exports[`replay 3 — tide-turning goal applies +3 from negative, +2 from positi
       {
         "amount": -1,
         "side": "home",
+        "threshold": -3,
         "type": "cardPowerBonus",
       },
     ],
@@ -469,6 +468,7 @@ exports[`replay 3 — tide-turning goal applies +3 from negative, +2 from positi
       {
         "amount": 1,
         "side": "home",
+        "threshold": 3,
         "type": "cardPowerBonus",
       },
     ],
@@ -498,6 +498,7 @@ exports[`replay 3 — tide-turning goal applies +3 from negative, +2 from positi
       {
         "amount": 1,
         "side": "home",
+        "threshold": 4,
         "type": "extraCardDraw",
       },
       {
@@ -589,6 +590,7 @@ exports[`replay 4 — single enteredTheZone slot, rivalTrough cannot duplicate >
       {
         "amount": 1,
         "side": "home",
+        "threshold": 3,
         "type": "cardPowerBonus",
       },
     ],
@@ -618,6 +620,7 @@ exports[`replay 4 — single enteredTheZone slot, rivalTrough cannot duplicate >
       {
         "amount": 1,
         "side": "home",
+        "threshold": 4,
         "type": "extraCardDraw",
       },
     ],
@@ -773,6 +776,7 @@ exports[`replay 4 — single enteredTheZone slot, rivalTrough cannot duplicate >
       {
         "amount": -1,
         "side": "away",
+        "threshold": -3,
         "type": "cardPowerBonus",
       },
     ],
@@ -1006,6 +1010,7 @@ exports[`replay 6 — playsAtPeakPositive resets when bar drops below +5 > match
       {
         "amount": 1,
         "side": "home",
+        "threshold": 3,
         "type": "cardPowerBonus",
       },
     ],
@@ -1035,6 +1040,7 @@ exports[`replay 6 — playsAtPeakPositive resets when bar drops below +5 > match
       {
         "amount": 1,
         "side": "home",
+        "threshold": 4,
         "type": "extraCardDraw",
       },
     ],
@@ -1247,7 +1253,6 @@ exports[`replay 6 — playsAtPeakPositive resets when bar drops below +5 > match
       "crossedThresholds": [
         3,
         4,
-        5,
       ],
       "maxReached": 5,
       "playerInTheZone": {
@@ -1257,7 +1262,12 @@ exports[`replay 6 — playsAtPeakPositive resets when bar drops below +5 > match
       "playsAtPeakPositive": 0,
     },
     "op": "home.degrade(hadEvent=false,det=10)",
-    "resets": [],
+    "resets": [
+      {
+        "side": "home",
+        "threshold": 5,
+      },
+    ],
   },
   {
     "away": {
@@ -1268,7 +1278,12 @@ exports[`replay 6 — playsAtPeakPositive resets when bar drops below +5 > match
       "playerInTheZone": null,
       "playsAtPeakPositive": 0,
     },
-    "effects": [],
+    "effects": [
+      {
+        "side": "home",
+        "type": "perfectPlayUnlocked",
+      },
+    ],
     "home": {
       "bar": 5,
       "consecutiveWins": 3,

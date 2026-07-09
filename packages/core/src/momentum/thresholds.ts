@@ -15,10 +15,10 @@ function opposite(side: MomentumSide): MomentumSide {
 }
 
 function mechanicalEffect(threshold: MomentumThreshold, side: MomentumSide): ThresholdEffect {
-	if (threshold === 3) return { type: 'cardPowerBonus', side, amount: 1 };
-	if (threshold === -3) return { type: 'cardPowerBonus', side, amount: -1 };
-	if (threshold === 4) return { type: 'extraCardDraw', side, amount: 1 };
-	return { type: 'extraCardDraw', side, amount: -1 };
+	if (threshold === 3) return { type: 'cardPowerBonus', side, amount: 1, threshold };
+	if (threshold === -3) return { type: 'cardPowerBonus', side, amount: -1, threshold };
+	if (threshold === 4) return { type: 'extraCardDraw', side, amount: 1, threshold };
+	return { type: 'extraCardDraw', side, amount: -1, threshold: -4 };
 }
 
 export function detectThresholdCrossing(
@@ -113,9 +113,9 @@ export function applyThresholdEffects(
 		if (effect.side !== side) continue;
 
 		if (effect.type === 'cardPowerBonus') {
-			crossedThresholds.add(effect.amount === 1 ? 3 : -3);
+			crossedThresholds.add(effect.threshold);
 		} else if (effect.type === 'extraCardDraw') {
-			crossedThresholds.add(effect.amount === 1 ? 4 : -4);
+			crossedThresholds.add(effect.threshold);
 		} else if (effect.type === 'perfectPlayUnlocked') {
 			crossedThresholds.add(5);
 		} else if (effect.type === 'enteredTheZone') {

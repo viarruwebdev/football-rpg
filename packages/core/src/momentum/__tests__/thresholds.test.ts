@@ -19,22 +19,36 @@ describe('detectThresholdCrossing — ±3 and ±4 (mechanical, symmetric)', () =
 		const before = createMatchMomentumState();
 		const after = withBar(before, 'home', 3);
 		const { effects } = detectThresholdCrossing(before, after, 'home');
-		expect(effects).toEqual([{ type: 'cardPowerBonus', side: 'home', amount: 1 }]);
+		expect(effects).toEqual([
+			{ type: 'cardPowerBonus', side: 'home', amount: 1, threshold: 3 },
+		]);
 	});
 
 	it('bar 0 -> -3 emits cardPowerBonus with amount -1', () => {
 		const before = createMatchMomentumState();
 		const after = withBar(before, 'home', -3);
 		const { effects } = detectThresholdCrossing(before, after, 'home');
-		expect(effects).toEqual([{ type: 'cardPowerBonus', side: 'home', amount: -1 }]);
+		expect(effects).toEqual([
+			{ type: 'cardPowerBonus', side: 'home', amount: -1, threshold: -3 },
+		]);
 	});
 
 	it('bar 0 -> +4 emits both cardPowerBonus and extraCardDraw (crosses +3 and +4)', () => {
 		const before = createMatchMomentumState();
 		const after = withBar(before, 'home', 4);
 		const { effects } = detectThresholdCrossing(before, after, 'home');
-		expect(effects).toContainEqual({ type: 'cardPowerBonus', side: 'home', amount: 1 });
-		expect(effects).toContainEqual({ type: 'extraCardDraw', side: 'home', amount: 1 });
+		expect(effects).toContainEqual({
+			type: 'cardPowerBonus',
+			side: 'home',
+			amount: 1,
+			threshold: 3,
+		});
+		expect(effects).toContainEqual({
+			type: 'extraCardDraw',
+			side: 'home',
+			amount: 1,
+			threshold: 4,
+		});
 		expect(effects).toHaveLength(2);
 	});
 
@@ -47,8 +61,18 @@ describe('detectThresholdCrossing — ±3 and ±4 (mechanical, symmetric)', () =
 		const beforeMatch = { ...before, home: activeState };
 		const after = withBar(beforeMatch, 'home', 4);
 		const { effects } = detectThresholdCrossing(beforeMatch, after, 'home');
-		expect(effects).toContainEqual({ type: 'cardPowerBonus', side: 'home', amount: 1 });
-		expect(effects).toContainEqual({ type: 'extraCardDraw', side: 'home', amount: 1 });
+		expect(effects).toContainEqual({
+			type: 'cardPowerBonus',
+			side: 'home',
+			amount: 1,
+			threshold: 3,
+		});
+		expect(effects).toContainEqual({
+			type: 'extraCardDraw',
+			side: 'home',
+			amount: 1,
+			threshold: 4,
+		});
 	});
 
 	it('does NOT re-fire +4 if it never dropped below +3 (still marked crossed)', () => {
@@ -128,7 +152,12 @@ describe('detectThresholdCrossing — Gherkin scenarios', () => {
 		const beforeMatch = { ...before, home: activeState };
 		const after = withBar(beforeMatch, 'home', 3);
 		const { effects } = detectThresholdCrossing(beforeMatch, after, 'home');
-		expect(effects).toContainEqual({ type: 'cardPowerBonus', side: 'home', amount: 1 });
+		expect(effects).toContainEqual({
+			type: 'cardPowerBonus',
+			side: 'home',
+			amount: 1,
+			threshold: 3,
+		});
 	});
 
 	it('bar falling to -5 does NOT unlock Jugada perfecta for anyone; grants enteredTheZone to the rival', () => {

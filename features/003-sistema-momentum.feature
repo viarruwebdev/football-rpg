@@ -293,6 +293,15 @@ Característica: Sistema de momentum unificado
     Entonces el contador de jugadas en +5 es 2, no 5
     Y el bonus post-partido de "5+ jugadas en +5" NO se considera alcanzado por esta racha
 
+  # --- Re-armado de umbrales en degradación (RF-008) ---
+
+  Escenario: bajar por degradación por debajo de +3 re-arma el one-shot para la próxima subida
+    Dado un equipo con momentum +3 (el umbral +3 ya se disparó una vez, crossedThresholds = {3})
+    Cuando la barra baja a +2 por degradación (sin evento significativo)
+    Entonces el umbral +3 queda disponible de nuevo (crossedThresholds no contiene 3)
+    Cuando la barra vuelve a subir a +3 por un evento
+    Entonces el one-shot de cardPowerBonus se dispara de nuevo
+
   # --- Jerarquía preservada ---
 
   Escenario: el momentum no invierte la jerarquía de calidad
