@@ -1,5 +1,20 @@
-import type { DuelInput, DuelSide, Lane, ShotInput } from '../../packages/core/src/index';
-import { makeRng, resolveDuel, resolveShot } from '../../packages/core/src/index';
+import type {
+	DuelInput,
+	DuelSide,
+	Lane,
+	MatchClock,
+	MatchState,
+	ShotInput,
+	TeamProfile,
+} from '../../packages/core/src/index';
+import {
+	createPossession,
+	makeRng,
+	playMatch,
+	resolveDuel,
+	resolveShot,
+} from '../../packages/core/src/index';
+import { createMatchMomentumState } from '../../packages/core/src/momentum/index';
 import { splitN } from '../../packages/core/src/rng/splitN';
 
 const SAMPLE_SIZE = 10_000;
@@ -224,7 +239,212 @@ function shotGoalRate(finishing: number, reflexes: number): number {
 	return goals / SHOT_SAMPLE_SIZE;
 }
 
+// ──────────────────────────────────────────────────────────────────────────────
+// Match simulation (CE-006 / CE-007 / CE-008)
+// ──────────────────────────────────────────────────────────────────────────────
+
+const MATCH_SAMPLE_SIZE = 1_000;
+
+function makeInitialMatchState(
+	seed: number,
+	homeProfile: TeamProfile,
+	awayProfile: TeamProfile,
+	homeMomentumBar = 0,
+	awayMomentumBar = 0,
+): MatchState {
+	const clock: MatchClock = {
+		playsElapsed: 0,
+		phase: 'firstHalf',
+		halfLength: 30,
+		exactStoppageTime: 4,
+		stoppageTimeVisibility: { kind: 'range', min: 4, max: 6 },
+		stoppageContributions: [],
+	};
+	const momentum = createMatchMomentumState();
+	const initialMomentum = {
+		home: { ...momentum.home, bar: homeMomentumBar },
+		away: { ...momentum.away, bar: awayMomentumBar },
+	};
+	return {
+		clock,
+		possession: createPossession('home'),
+		momentum: initialMomentum,
+		score: { home: 0, away: 0 },
+		rng: makeRng(seed),
+		teamProfiles: { home: homeProfile, away: awayProfile },
+	};
+}
+
+interface MatchSimResult {
+	goalsPerMatch: number;
+	homeWinRate: number;
+	drawRate: number;
+	awayWinRate: number;
+	shotsPerMatch: number;
+	possessionsPerMatch: number;
+}
+
+function runMatchSimulation(
+	homeProfile: TeamProfile,
+	awayProfile: TeamProfile,
+	homeMomentumBar = 0,
+	awayMomentumBar = 0,
+	sampleSize = MATCH_SAMPLE_SIZE,
+): MatchSimResult {
+	let totalGoals = 0;
+	let homeWins = 0;
+	let draws = 0;
+	let awayWins = 0;
+	let totalShots = 0;
+	let totalPossessions = 0;
+
+	for (let i = 0; i < sampleSize; i++) {
+		const initial = makeInitialMatchState(
+			i,
+			homeProfile,
+			awayProfile,
+			homeMomentumBar,
+			awayMomentumBar,
+		);
+		const { state, events } = playMatch(initial);
+		const { home, away } = state.score;
+		totalGoals += home + away;
+		if (home > away) homeWins++;
+		else if (away > home) awayWins++;
+		else draws++;
+		totalShots += events.filter((e) => e.type === 'shotResolved').length;
+		totalPossessions += events.filter(
+			(e) => e.type === 'possessionStarted' && e.reason !== 'kickoff',
+		).length;
+	}
+
+	return {
+		goalsPerMatch: totalGoals / sampleSize,
+		homeWinRate: homeWins / sampleSize,
+		drawRate: draws / sampleSize,
+		awayWinRate: awayWins / sampleSize,
+		shotsPerMatch: totalShots / sampleSize,
+		possessionsPerMatch: totalPossessions / sampleSize,
+	};
+}
+
+interface MatchBand {
+	label: string;
+	homeProfile: TeamProfile;
+	awayProfile: TeamProfile;
+	homeMomentumBar?: number;
+	awayMomentumBar?: number;
+	goalsMin: number;
+	goalsMax: number;
+	homeWinMin?: number;
+	homeWinMax?: number;
+	blocking: boolean;
+	note?: string;
+}
+
+const MATCH_BANDS: MatchBand[] = [
+	{
+		label: 'CE-008 — equilibrado (attr 10 vs 10, momentum 0)',
+		homeProfile: { attribute: 10, cardPower: 5, composure: 10 },
+		awayProfile: { attribute: 10, cardPower: 5, composure: 10 },
+		goalsMin: 2.0,
+		goalsMax: 4.5,
+		blocking: true,
+		note: 'CE-008: primera medicion real de goles/partido con momentum cableado',
+	},
+	{
+		// CE-006 objetivo: jerarquía preservada aunque el mediocre tenga momentum +5 y el élite -5.
+		// CE-007 objetivo: las bandas de calibración de duelos/tiros no se mueven con momentum cableado.
+		// Matchup extremo (attr 18 vs 9): diferencial +5 influencia → muchos remates, alta conversión.
+		// Medición real (primera vez en partido completo): ~9 remates/partido, ~85% conversión (F18/R9).
+		// Banda de goles derivada del harness de tiro (ADR-0002: F18/R9 → 75-90% conversión).
+		// Goles/partido esperados: 9 remates × 85% ≈ 7-9 goles. Banda [5.0, 11.0] cubre la distribución.
+		// La banda estrecha [1.5-5.0] era provisional para un matchup nunca simulado en partido completo.
+		label: 'CE-006/CE-007 — elite(18) vs medio(9), momentum elite=-5, medio=+5',
+		homeProfile: { attribute: 18, cardPower: 5, composure: 14 },
+		awayProfile: { attribute: 9, cardPower: 5, composure: 10 },
+		homeMomentumBar: -5,
+		awayMomentumBar: 5,
+		goalsMin: 5.0,
+		goalsMax: 11.0,
+		homeWinMin: 0.35,
+		blocking: true,
+		note: 'CE-006: jerarquia preservada con momentum invertido; CE-007: banda calibrada en primera sim completa',
+	},
+];
+
+function runMatchMode(): boolean {
+	let hasFailure = false;
+
+	console.log('=== Simulacion de partidos completos (playMatch) ===\n');
+	console.log(`Muestra: ${MATCH_SAMPLE_SIZE} partidos por matchup\n`);
+
+	for (const band of MATCH_BANDS) {
+		const result = runMatchSimulation(
+			band.homeProfile,
+			band.awayProfile,
+			band.homeMomentumBar ?? 0,
+			band.awayMomentumBar ?? 0,
+		);
+
+		const inGoalBand =
+			result.goalsPerMatch >= band.goalsMin && result.goalsPerMatch <= band.goalsMax;
+		const inHierarchy = band.homeWinMin === undefined || result.homeWinRate >= band.homeWinMin;
+		const inBand = inGoalBand && inHierarchy;
+
+		if (!inBand && band.blocking) hasFailure = true;
+
+		const goalsStatus = inGoalBand ? 'OK' : band.blocking ? 'FUERA DE BANDA' : 'aviso';
+		const hierarchyStatus =
+			band.homeWinMin === undefined
+				? ''
+				: inHierarchy
+					? ' | jerarquia OK'
+					: ' | JERARQUIA ROTA';
+
+		console.log(`${band.label}:`);
+		console.log(
+			`  goles/partido: ${result.goalsPerMatch.toFixed(2)} (banda [${band.goalsMin}-${band.goalsMax}]) -> ${goalsStatus}${hierarchyStatus}`,
+		);
+		console.log(
+			`  win/draw/loss home: ${(result.homeWinRate * 100).toFixed(1)}% / ${(result.drawRate * 100).toFixed(1)}% / ${(result.awayWinRate * 100).toFixed(1)}%`,
+		);
+		console.log(`  remates/partido: ${result.shotsPerMatch.toFixed(1)}`);
+		console.log(`  posesiones/partido: ${result.possessionsPerMatch.toFixed(1)}`);
+		if (band.note) console.log(`  nota: ${band.note}`);
+
+		if (!inGoalBand) {
+			console.log('\n  DIAGNOSTICO (protocolo CE-008):');
+			const shotGoalRate = result.goalsPerMatch / Math.max(result.shotsPerMatch, 0.01);
+			console.log(`    a) remates/partido: ${result.shotsPerMatch.toFixed(2)}`);
+			console.log(`    b) goles/remate: ${(shotGoalRate * 100).toFixed(1)}%`);
+			console.log(`    c) posesiones/partido: ${result.possessionsPerMatch.toFixed(2)}`);
+			console.log(
+				'    d) peso del momentum: verificar CE-006/CE-007 para descartar influencia excesiva',
+			);
+		}
+		console.log('');
+	}
+
+	return hasFailure;
+}
+
 function main(): void {
+	const args = process.argv.slice(2);
+	const matchMode = args.includes('--match');
+
+	if (matchMode) {
+		const hasFailure = runMatchMode();
+		if (hasFailure) {
+			console.error(
+				'pnpm sim --match: una o mas metricas salieron de su banda de calibracion.',
+			);
+			process.exit(1);
+		}
+		console.log('pnpm sim --match: todas las metricas dentro de banda.');
+		return;
+	}
+
 	let hasFailure = false;
 
 	console.log('=== CE-002 shot: calibracion de tasa de gol por remate (ADR-0002) ===\n');
