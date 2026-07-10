@@ -143,6 +143,8 @@ Este repo usa **GitHub Spec Kit**. El flujo por feature es:
 - Cuando se derogue una regla del manual, buscar y eliminar sus copias en skills, specs, data-model y código — no solo en la fuente. Un dato derogado sobrevive en cada copia hasta que alguien la audita.
 - Un golden replay generado sobre código con un bug convierte el bug en el contrato. Antes de congelar snapshots, verifica que el comportamiento capturado es el que la spec exige — no solo que es reproducible. Al corregir un bug con goldens existentes: arregla primero, regenera después, y lee el diff del snapshot.
 - Un test que nunca ha fallado contra el bug que dice cubrir no cubre nada. Al arreglar un bug, verifica que el test de regresión se pone rojo contra el código previo antes de darlo por bueno.
+- Una tabla de cobertura RF→tarea→test verifica que existe un test, no que prueba lo que dice. Un test puede estar mapeado al requisito correcto, tener el nombre correcto, pasar en verde, y no tocar el código que cubre. La única verificación real es romper el código a propósito y ver si el test falla.
+- `toBeDefined()` sobre expresiones que devuelven booleanos o arrays es tautológico y no puede fallar. Lo mismo una aserción encerrada en un `if` que puede no ejecutarse. Barre ambos patrones al revisar tests.
 - Valida en la frontera y falla ruidosamente. Un filtro defensivo en el receptor convierte un contrato roto en comportamiento correcto y entierra el bug del llamador. Prefiere una aserción que grite a un filtro que calle. Aplica al motor entero, no solo al momentum.
 
 ## 11. Referencias
