@@ -15,6 +15,10 @@ export function createMatchMomentumState(): MatchMomentumState {
 	return { home: createMomentumState(), away: createMomentumState() };
 }
 
+export function resetConsecutiveWins(state: MomentumState): MomentumState {
+	return { ...state, consecutiveWins: 0 };
+}
+
 export function saturate(bar: number): number {
 	return Math.max(-5, Math.min(5, bar));
 }
