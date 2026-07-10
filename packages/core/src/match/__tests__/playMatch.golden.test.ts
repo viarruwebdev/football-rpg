@@ -175,4 +175,22 @@ describe('playMatch', () => {
 			{ numRuns: 10 },
 		);
 	});
+
+	it('NOT YET IMPLEMENTED (/analyze C1): exactStoppageTime never changes mid-match — computeStoppageTime is not wired into playMatch', () => {
+		// /analyze raised C1 (HIGH) asking for an integration test: "match with N
+		// fouls from kickoff → exactStoppageTime == base + 0.5·N". That test does
+		// NOT exist — clock.test.ts only exercises computeStoppageTime in isolation.
+		// This is the actual integration test, and it pins the real behaviour:
+		// playMatch never calls computeStoppageTime. Fouls/injuries/substitutions
+		// are out of scope for the 004 (spec.md, "Fuera de alcance"), so there are
+		// no contributions to feed it — exactStoppageTime is read-only from
+		// playMatch's point of view, always equal to whatever the initial state set.
+		const initial = makeInitialState(42);
+		const { state } = playMatch(initial);
+		expect(state.clock.exactStoppageTime).toBe(initial.clock.exactStoppageTime);
+
+		// If this starts failing because playMatch now recomputes stoppage time from
+		// fouls/injuries/substitutions, that's a deliberate feature — update this test
+		// to assert the new behaviour and remove the "not yet implemented" framing.
+	});
 });

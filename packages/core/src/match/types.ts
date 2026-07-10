@@ -40,6 +40,12 @@ export interface MatchClock {
 	stoppageContributions: TimeConsumingEvent[];
 }
 
+// NOTE: `transitionBonus` and `zoneBoost` carry the §6 bonus values as data,
+// but neither is consumed anywhere — `applyTransition` (possession.ts) returns
+// the possession unchanged for both variants. This is deliberate v1 scope
+// (RF-019/RF-020, spec.md), the same pattern as `isPenalty?` in feature 002.
+// See match/__tests__/transition.test.ts for a test that pins this as
+// not-yet-implemented, so cabling it in later is a visible, intentional change.
 export type PossessionTransition =
 	| { kind: 'crushingAdvance' }
 	| { kind: 'cleanAdvance' }

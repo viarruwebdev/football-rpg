@@ -36,7 +36,7 @@ El manual describe un motor de partido enorme. Esta feature entrega **una posesi
 - Pool de jugadores ponderado por mapa de calor (feature de pool).
 - Modos de velocidad (Completo/Táctico/Resumen) — es capa de UI/automatización.
 - Prórroga y penaltis (feature propia; incluye el reset de momentum a 0 al inicio de prórroga).
-- Faltas, tarjetas, lesiones y sustituciones. **El reloj SÍ acepta sus contribuciones al descuento como entrada**, pero no las genera.
+- Faltas, tarjetas, lesiones y sustituciones. `computeStoppageTime(base, contributions)` existe y está probada en aislamiento (recibiría sus contribuciones al descuento como entrada), pero `playMatch` no la invoca — `exactStoppageTime` es fijo desde el estado inicial durante todo el partido. Es un punto de extensión sin cablear, no un dato consumido; corregir esta línea evita que un futuro lector asuma que ya funciona de extremo a extremo.
 - Córner y penalti como secuencias (consumen 2 jugadas; se modelan como entradas al reloj, no se resuelven).
 - Mini-duelo del balón dividido (la 001 ya emite el evento; se resuelve en su feature). El reloj sí cobra la jugada extra.
 
@@ -140,7 +140,7 @@ Como jugador, cuando robo el balón, quiero iniciar una posesión nueva con la p
 
   > **Cambio a código existente:** la 003 resetea `consecutiveWins` solo al perder un duelo, y su módulo no conoce el concepto de posesión. La 004 DEBE ampliar la superficie pública del módulo de momentum con una operación de reset por fin de posesión (p. ej. `resetConsecutiveWins(state, side)`, o incluirlo en `degradeAndDetect`). Es ampliación de superficie, no cambio de lógica: `applyEvent`, `applyDuelResult`, `detectThresholdCrossing` y `applyThresholdEffects` no se tocan.
 - **RF-010** Al cerrar una posesión, el sistema DEBE llamar a `degradeAndDetect` para **ambos** equipos, con la condición del §7: positivo degrada solo si ese equipo no tuvo evento significativo ni duelo ganado; negativo degrada siempre.
-- **RF-011** El **robo de balón** DEBE cerrar la posesión del atacante e iniciar una nueva del defensor, con presión reseteada a 0, bonus de transición aplicados, y sin pausar el reloj.
+- **RF-011** El **robo de balón** DEBE cerrar la posesión del atacante e iniciar una nueva del defensor, con presión reseteada a 0, y sin pausar el reloj. Los datos de bonus de transición (`transitionBonus`, `zoneBoost`) se emiten en el `PossessionTransition` de la variante correspondiente pero **no se aplican** a la nueva posesión — ver RF-020, mismo scope que el resto de puntos de extensión de RF-019.
 - **RF-012** Al agotarse el reloj durante una posesión, el atacante DEBE poder completar el duelo en curso. Si ese duelo resulta en remate, el remate se ejecuta.
 - **RF-013** **Último suspiro:** si el equipo atacante va perdiendo y el reloj está a 0, DEBE poder jugar exactamente 1 duelo extra. Si resulta en remate, se ejecuta.
 - **RF-014** La primera posesión de la primera parte es del **local**; la de la segunda parte, del **visitante**.
@@ -175,7 +175,7 @@ Como jugador, cuando robo el balón, quiero iniciar una posesión nueva con la p
 
 - **CE-001 (determinismo):** el mismo estado inicial y semilla producen el mismo partido completo (mismo log de eventos, mismo marcador).
 - **CE-002 (reloj exacto):** la suma de jugadas consumidas coincide con la tabla del §2 para toda secuencia. Un partido sin eventos extra dura exactamente 60 + descuento.
-- **CE-003 (descuento determinista):** el descuento exacto se deriva de la semilla y los eventos; revelarlo no lo cambia. Dos ejecuciones con la misma semilla dan el mismo descuento.
+- **CE-003 (descuento determinista):** el descuento exacto es fijo desde el `MatchState` inicial durante todo el partido; revelarlo no lo cambia. Dos ejecuciones con la misma semilla dan el mismo descuento. `computeStoppageTime(base, contributions)` existe y deriva un descuento a partir de contribuciones (faltas/lesiones/sustituciones), pero `playMatch` **no la invoca** — faltas/lesiones/sustituciones están fuera de alcance de la 004 (ver "Fuera de alcance"), así que no hay contribuciones que generar. La integración semilla→eventos→descuento dinámico queda pendiente de la feature que sí genere esas contribuciones.
 - **CE-004 (presión acumulada):** el eslabón *n* de una posesión aporta +(n−1) de presión al defensor, y entra en el bruto de mods (no íntegro).
 - **CE-005 (momentum cableado):** con momentum +5, el bruto de mods de `resolveDuel` incluye +0.75, y el efectivo respeta `applyDiminishing`. Verificable con test de composición.
 - **CE-006 (jerarquía preservada — hereda CE-014 de la 003):** en simulación de partidos completos, un equipo medio con momentum +5 sigue perdiendo contra un equipo élite con momentum −5. **El momentum importa pero no fabrica calidad.**

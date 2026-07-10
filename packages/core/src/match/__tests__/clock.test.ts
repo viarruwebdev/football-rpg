@@ -75,6 +75,12 @@ describe('advanceClock', () => {
 	});
 });
 
+// NOTE: these tests exercise `computeStoppageTime` in isolation. They do NOT
+// cover the /analyze C1 finding ("partido con N faltas → exactStoppageTime ==
+// base + 0.5·N"), which asked for an INTEGRATION test through `playMatch`.
+// `playMatch` never calls `computeStoppageTime` (faults/injuries/substitutions
+// are out of scope for the 004 — see spec.md CE-003), so no such integration
+// exists yet. See playMatch.golden.test.ts for the test that pins this gap.
 describe('computeStoppageTime', () => {
 	it('CE-003: same contributions + same base → same exactStoppageTime', () => {
 		const contributions = [{ kind: 'foul' as const }, { kind: 'injury' as const }];
@@ -83,7 +89,7 @@ describe('computeStoppageTime', () => {
 		expect(a).toBe(b);
 	});
 
-	it('C1 RF-003: base 4, 2 fouls, 1 injury, 1 substitution → 6.5', () => {
+	it('base 4, 2 fouls, 1 injury, 1 substitution → 6.5 (unit, not integrated into playMatch)', () => {
 		const contributions = [
 			{ kind: 'foul' as const },
 			{ kind: 'foul' as const },
@@ -93,7 +99,7 @@ describe('computeStoppageTime', () => {
 		expect(computeStoppageTime(4, contributions)).toBe(6.5);
 	});
 
-	it('C1 double foul effect: foul adds 0.5 to stoppage time', () => {
+	it('double foul effect: foul adds 0.5 to stoppage time (unit, not integrated into playMatch)', () => {
 		const withFoul = computeStoppageTime(4, [{ kind: 'foul' }]);
 		expect(withFoul).toBe(4.5);
 	});

@@ -77,6 +77,23 @@ describe('applyTransition', () => {
 		expect(next.strip).toBe(p.strip);
 		expect(next.accumulatedPressure).toBe(p.accumulatedPressure);
 	});
+
+	it('NOT YET IMPLEMENTED (RF-019/RF-020): transitionBonus and zoneBoost are carried as data but never applied to the possession', () => {
+		// disadvantageLoss carries transitionBonus: 2 (§6 "Transición +2 bonus") — the
+		// returned possession is unchanged, the bonus is not folded into any field.
+		const p1 = createPossession('home');
+		const afterDisadvantage = applyTransition(p1, segmentToTransition('disadvantagedLoss'));
+		expect(afterDisadvantage).toEqual(p1);
+
+		// devastatingCounter carries zoneBoost: 3 (§6 "Salto de zona +3 bonus") — same story.
+		const p2 = createPossession('home');
+		const afterDevastating = applyTransition(p2, segmentToTransition('devastatingCounter'));
+		expect(afterDevastating).toEqual(p2);
+
+		// If this test starts failing because applyTransition now DOES something with
+		// these bonuses, that's a deliberate feature, not a regression — update this
+		// test to assert the new behaviour and remove the "not yet implemented" framing.
+	});
 });
 
 describe('closePossession', () => {
