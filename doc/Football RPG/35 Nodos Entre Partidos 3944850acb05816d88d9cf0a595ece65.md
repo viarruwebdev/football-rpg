@@ -215,7 +215,7 @@ Récord suizo: 2-1 | Consumibles: 1 ficha ojeo, 1 comodín táctico
 
 **Nodo 1 — Recuperación:** Torres con fatiga 11/14, Romero 10/12. Méndez lesión menor (1 partido). Torres moral sube a Alto (doblete). Racha equipo: 2 victorias. Recompensa elegida: "+1 PA a Torres".
 
-**Nodo 2 — Entrenamiento:** Vidal tiene Composure al 96%. Foco a Vidal Composure (+5%). ¡Composure sube de 15 a 16! Desbloquea rasgo "Sangre fría" (umbral automático). Torres Finishing al 78%, no sube aún.
+**Nodo 2 — Entrenamiento:** Vidal (19, Del. Goleador) ⭐ SUBE DE NIVEL. Elige 1 de 3 paquetes (5 atributos, nivel fundamentos). Elige paquete con +1 Finishing (13→14) + Carta "Tiro a puerta". Romero y López: barra de experiencia avanza, no suben aún. Foco individual a Romero.
 
 **Nodo 3 — Actividad opcional:** Opciones: sesión extra Torres (+50% pero +1 fatiga), día descanso colectivo (fatiga -1, progresión -50%), partido amistoso interno (suplentes +25%, canterano +4 CA). Elección: día de descanso (Torres y Romero necesitan recuperar). Torres fatiga 11→10, Romero 10→9.
 
@@ -229,7 +229,7 @@ Récord suizo: 2-1 | Consumibles: 1 ficha ojeo, 1 comodín táctico
 
 **Nodo 1 — Recuperación:** Méndez recuperado. Torres fatiga 12/14 (muy alta). Moral grupo: Alto (3 victorias). A 2 victorias del Championship.
 
-**Nodo 2 — Entrenamiento:** García Tackling al 77%. López (canterano) Pace al 86%. Foco a García Tackling (+5%). ¡Tackling sube de 14 a 15! Desbloquea "Corte de línea".
+**Nodo 2 — Entrenamiento:** García (26, Pivote) ⭐ SUBE DE NIVEL. Elige paquete con +1 Tackling (14→15) + Carta "Corte de línea". López (canterano) barra de experiencia avanza.
 
 **Nodo 3 — Evento del catálogo:** "Canterano pide oportunidades". López (17, ★★★, Ambition 15) pide jugar. Opciones: "Te voy a dar minutos" (compromiso 5+ partidos o pierde moral/PA) o "Espera tu momento" (20% de que rechace contrato a los 18). Elección: "Te voy a dar minutos". López moral sube a Alto. Compromiso: 0/5 partidos.
 
@@ -243,7 +243,7 @@ Récord suizo: 2-1 | Consumibles: 1 ficha ojeo, 1 comodín táctico
 
 **Nodo 1 — Recuperación:** Torres descansó, fatiga 10→8. López fresco (fatiga 3/10). Moral grupo: Eufórico (4 victorias). ¡A 1 victoria del Championship!
 
-**Nodo 2 — Entrenamiento:** López Dribbling al 78%. Foco a López Dribbling (+5%). ¡Dribbling sube de 10 a 11! Desbloquea "Conducción".
+**Nodo 2 — Entrenamiento:** López (17, Extremo) ⭐ SUBE DE NIVEL. Elige paquete con +1 Dribbling (10→11) + Carta "Conducción". Foco individual a López.
 
 **Nodo 3 — Semana tranquila:** No pasa nada. La calma antes del partido decisivo.
 

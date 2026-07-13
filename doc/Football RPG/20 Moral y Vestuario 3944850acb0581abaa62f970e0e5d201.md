@@ -28,15 +28,14 @@ Cada jugador tiene uno de 5 estados de moral. Sin números internos, solo estado
 
 - Racha de 3+ victorias → sube 1 escalón a todos
 - Racha de 3+ derrotas → baja 1 escalón a todos
-- Ascenso / título → sube 2 escalones
-- Descenso → baja 2 escalones
+- Título de copa → sube 2 escalones
+- Acabar en Copa Bronce → baja 2 escalones
 
 ## 3. Eventos puntuales
 
 - Conflicto con compañero o míster → baja 1 escalón
-- Renovación satisfactoria → sube 1 escalón
-- Convocatoria internacional → sube 1 escalón
-- Multa / sanción → baja 1 escalón
+- Retención aceptada → sube 1 escalón
+- Suspensión por tarjetas → baja 1 escalón
 
 ---
 
@@ -70,7 +69,7 @@ La mejor herramienta: rotar para que todos jueguen mantiene la moral sin necesid
 
 ## Conflictos
 
-Generados por rasgos (Tóxico, Diva). Se resuelven vendiendo a uno de los implicados, o el conflicto baja la moral de ambos 1 escalón mientras dure.
+Generados por rasgos (Tóxico, Diva). Se resuelven no reteniendo a uno de los implicados al final de temporada, o tradeándolo pre-draft. Mientras dure, el conflicto baja la moral de ambos 1 escalón.
 
 ---
 

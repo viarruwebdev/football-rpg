@@ -17,13 +17,13 @@ Se eligen 3 de las 6 categorías al azar. Dentro de cada categoría se elige 1 r
 - "+3 CA a un jugador menor de 23 de tu elección"
 - "+1 PA permanente a un jugador que jugó el partido"
 - "Un atributo específico de un jugador sube +1 permanente (tú eliges jugador y atributo)"
-- "Desbloquea foco de entrenamiento adicional para 1 jugador durante 5 partidos (doble velocidad)"
+- "Desbloquea +30% velocidad hacia la siguiente subida de nivel para 1 jugador durante 5 partidos"
 - "Un canterano de tu cantera gana +5 CA inmediato"
-- "Un jugador que marcó gol gana +2 CA inmediato en Finishing"
+- "Un jugador que marcó gol gana +1 Finishing permanente (salta el d100, subida directa)"
 - "Un jugador que dio asistencia gana +1 permanente en Passing o Vision (tú eliges)"
 - "Un jugador veterano (28+) gana +1 permanente en un atributo mental a elegir"
 - "Ralentiza el declive de 1 veterano: sus físicos no bajan durante 5 partidos"
-- "Un jugador con PA no alcanzado gana +5% velocidad de desarrollo durante 10 partidos"
+- "Un jugador con PA no alcanzado gana +30% velocidad hacia la siguiente subida de nivel durante 10 partidos"
 
 ---
 
