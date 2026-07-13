@@ -71,6 +71,19 @@ describe('applyTransition', () => {
 		expect(['midfield', 'attack', 'area']).toContain(next.strip);
 	});
 
+	// IMPLEMENTED (RF-012/CE-011): drawOnCrushingSuccess is wired in playMatch when
+	// the segment is 'crushingSuccess' and cardEconomy is present (playMatch.ts:378).
+	// Verified via packages/core/src/cards/__tests__/integration.test.ts test (a) and (d):
+	// cards are consumed per duel and the crushing draw adds one card to the attacker's hand.
+	//
+	// CORRECTION: the spec 005 text for CE-011 claimed "the 004 no-implementation test
+	// breaks when wired up (and gets updated on purpose)". That premise is false — the 004
+	// PossessionTransition (crushingAdvance) never carried a draw-related data field, unlike
+	// disadvantageLoss/devastatingCounter below (which DO carry transitionBonus/zoneBoost and
+	// DO have a no-implementation test). There was never a test to break; drawOnCrushingSuccess
+	// is a wholly new RF-012 mechanism with no 004 precedent. Confirmed via git log — no commit
+	// ever introduced a `drawsCard`-style field on crushingAdvance.
+
 	it('splitBall does not advance strip or change pressure', () => {
 		const p = createPossession('home');
 		const next = applyTransition(p, segmentToTransition('splitBall'));

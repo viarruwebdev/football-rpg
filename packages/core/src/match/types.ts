@@ -1,3 +1,4 @@
+import type { CardEconomyState } from '../cards/types';
 import type { DuelSegment } from '../duel';
 import type {
 	MatchMomentumState,
@@ -106,4 +107,6 @@ export interface MatchState {
 	halftimeActions?: HalftimeAction[];
 	/** Team profiles for balance simulation. Defaults to attribute=10, cardPower=5, composure=10. */
 	teamProfiles?: Record<MomentumSide, TeamProfile>;
+	/** Card economy state. Optional — absent means playMatch uses stub inputs (004 compatibility). */
+	cardEconomy?: CardEconomyState;
 }
