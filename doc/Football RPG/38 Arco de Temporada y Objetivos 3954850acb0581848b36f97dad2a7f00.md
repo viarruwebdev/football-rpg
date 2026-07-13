@@ -14,7 +14,7 @@ Al inicio de cada temporada se generan 3 objetivos visibles según tu situación
 
 **Plata (exigente):** requiere esfuerzo. Ganar tu copa, racha de X victorias, jugador que suba Y atributos.
 
-**Oro (aspiracional):** casi fuera de alcance. Ganar Championship desde Copa Plata, canterano hasta técnica especial, racha de 10 en un partido.
+**Oro (aspiracional):** casi fuera de alcance. Ganar Championship desde Copa Plata, canterano hasta técnica especial, mantener momentum +5 durante 5+ jugadas en un partido.
 
 ## Recompensas por objetivo
 

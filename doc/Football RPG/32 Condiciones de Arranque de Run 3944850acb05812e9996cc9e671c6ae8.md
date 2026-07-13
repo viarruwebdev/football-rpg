@@ -93,21 +93,21 @@ Tres capas de variabilidad por run:
 
 **"Favoritos" ★★** — PA medio +15. Si no llegas al Championship en temporada 1, moral grupo -2 escalones.
 
-**"Franquicia nueva" ★** — Heredaste plantilla de franquicia relegada. Reputación peor de la liga: drafteados empiezan con -1 moral.
+**"Franquicia nueva" ★** — Tu franquicia acaba de entrar a la liga sustituyendo a una relegada. Plantilla generada desde cero (no heredas nada). Ranking en la parte baja: los drafteados empiezan con -1 moral (nadie quería ir a la nueva). Tu ojeador tiene capacidad doble en el primer draft.
 
 **"Némesis doble" ★★★** — 2 franquicias con perfil Némesis en vez de 1. Doble presión de rivalidad. Legado +20%.
 
 **"El retorno" ★★** — Franquicia que "volvió" tras relegación. 3 exjugadores en la liga con +20 química si los re-drafteas.
 
-**"En el punto de mira" ★★** — Tu franquicia está en zona de relegación desde el inicio (puntos de ranking heredados bajos). La primera evaluación es en la temporada 3 y necesitas escalar rápido o mueres.
+**"En el punto de mira" ★★** — Tu franquicia empieza en la mitad inferior del ranking (posición 20-26). Si acabas en Copa Bronce en la primera temporada y no llegas a la final, mueres. Necesitas escalar rápido.
 
 **"Liga en tu contra" ★★★** — 3 franquicias con perfil "Depredadora" te proponen trades desventajosos constantemente y 2 con perfil "Vendetta" te tienen en su lista desde el inicio. Legado +25%.
 
 **"Primer draft privilegiado" ★** — Tu primer draft tiene pick #1 garantizado (no lotería). A partir del segundo draft, lotería normal. La primera elección de tu carrera es la más importante.
 
-**"Temporada de gracia" ★** — Tu franquicia está protegida de la relegación durante el primer ciclo de 3 temporadas (no puedes ser eliminado en la primera evaluación). Pero a partir de la segunda evaluación, cuentan los puntos desde la temporada 1. Respiro inicial, presión acumulada después.
+**"Temporada de gracia" ★** — Tu franquicia no puede ser relegada en la primera temporada (protegida de Copa Bronce). A partir de la segunda temporada, relegación normal. Respiro inicial para construir sin presión de muerte.
 
-**"Todo o nada" ★★★** — Si no ganas al menos Copa Plata en las primeras 3 temporadas, pierdes -10 de ranking global (hundiendote hacia la relegación). Si la ganas, +10 extra. Apuesta extrema. Legado +30%.
+**"Todo o nada" ★★★** — Si no ganas al menos Copa Plata en la primera temporada, pierdes -10 de ranking global (hundiéndote hacia Copa Bronce y relegación). Si la ganas, +10 extra. Apuesta extrema. Legado +30%.
 
 ---
 

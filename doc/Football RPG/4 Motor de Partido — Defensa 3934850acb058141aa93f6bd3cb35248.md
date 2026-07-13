@@ -29,15 +29,34 @@ No hay selector de intensidad separado. La intensidad la determina la carta que 
 
 ## Capa 3: El repliegue táctico
 
-Antes de cada posesión rival puedes gastar 1 carta de tu mano para "replegar": sube la fuerza defensiva base pero te cuesta carta. Sacrificio de recursos ofensivos por seguridad.
+Antes de cada posesión rival puedes gastar **1 carta de tu mano** (de cualquier tipo) para "replegar": **+2 a la fuerza defensiva base** durante toda esa posesión rival. Sacrificio de recursos por seguridad.
+
+**Máximo 1 repliegue por posesión rival.** El +2 entra como **modificador situacional**, por lo que pasa por los rendimientos decrecientes de la sección 6 junto al resto de mods (carril, presión, momentum).
+
+> **Por qué no genera superdefensores.** Tres frenos independientes lo contienen: los mods sufren rendimientos decrecientes (100/50/33), hay un cap de +5 a bonus externos acumulados, y la carta gastada es un coste real cuando los mazos se agotan.
+> 
+
+> 
+> 
+
+> Peor caso: defensor élite (Tackling 18 → +4) con Barrida (potencia 4), carril acertado (+2 íntegro), presión +3, momentum +0.75 y repliegue +2. Íntegro: 10. Mods brutos: 5.75 → efectivos ≈5. Fuerza total ≈ **15**. El atacante élite con carta potencia 7 tiene Fuerza 11. Diferencial −4 — con la banda de incertidumbre, el atacante aún gana un 25-30% de los duelos. Duro, no un muro.
+> 
+
+> 
+> 
+
+> **Propiedad emergente:** como los decrecientes muerden más cuanto más bruto acumulas, el repliegue vale +2 efectivo en el primer eslabón y solo ≈1.5 en el cuarto. Replegar es más eficiente para cortar contragolpes temprano que para aguantar una posesión larga.
+> 
 
 ## Jugar sin carta de la fase actual
 
 Cuando no tienes cartas de la fase correcta en mano, nunca te quedas bloqueado. Tres opciones:
 
-**Jugada improvisada (potencia 0, no gasta carta):** En defensa = defensa a cuerpo limpio (potencia 0, usa Tackling + modificadores de carril/presión/momentum). El defensor se posiciona y usa su cuerpo pero sin plan táctico. Un defensor con Tackling 16 a cuerpo limpio todavía tiene opciones; uno con Tackling 9 está vendido.
+**Jugada improvisada (potencia 0, no gasta carta):** En defensa = defensa a cuerpo limpio (potencia 0, usa Tackling + modificadores de carril/presión/momentum). El defensor se posiciona y usa su cuerpo pero sin plan táctico.
 
-**Reconvertir carta de la otra fase (potencia mitad, gasta carta):** Una carta ofensiva jugada como defensa tiene su potencia reducida a la mitad (redondeada abajo). Un Pase al hueco (potencia 3) usado como "defensa" tiene potencia 1. Torpe pero mejor que nada.
+Los cálculos usan la **influencia comprimida** de la sección 6 (−4..+4), no el atributo en bruto. Un defensor con Tackling 18 (influencia +4) a cuerpo limpio tiene **Fuerza 4**, y si acierta el carril (+2 íntegro) sigue siendo viable. Uno con Tackling 9 (influencia −1) tiene **Fuerza −1**, y si además falla el carril, **−2**. Está vendido.
+
+**Reconvertir carta de la otra fase (potencia mitad, gasta carta):** solo cartas de **potencia ≥ 2**. La carta reconvertida usa el **atributo natural de la fase actual** (Tackling en defensa), no el suyo original. Un Pase al hueco (potencia 3, Passing) usado como defensa vale potencia 1 — y por tanto **no es reconvertible**. Ver sección 3 para la regla completa.
 
 **Instantes y tácticas compartidas:** Cartas del mini-mazo compartido son jugables en ambas fases. Inspiración (roba 2 cartas) puede sacarte del apuro robando del sub-mazo defensivo.
 

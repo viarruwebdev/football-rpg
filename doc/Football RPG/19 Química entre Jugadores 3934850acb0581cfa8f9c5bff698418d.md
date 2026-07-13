@@ -23,7 +23,7 @@ Cada par de jugadores tiene un valor de química entre 0 y 100. No es simétrica
 
 **Partidos jugados juntos:** +0.5 por partido como titulares. +0.5 extra por cada duelo donde participan en eslabones contiguos (uno pasa, otro recibe).
 
-**Éxito compartido:** victoria donde ambos jugaron +1. Título ganado (liga, copa, ascenso) +3 a todos los pares que participaron en >50% de los partidos.
+**Éxito compartido:** victoria donde ambos jugaron +1. Título de copa ganado +3 a todos los pares que participaron en >50% de los partidos.
 
 **Compatibilidad de rasgos:**
 
@@ -58,11 +58,11 @@ Cada par de jugadores tiene un valor de química entre 0 y 100. No es simétrica
 - Mercenario + Ídolo local: -1/mes
 - Influencia negativa + Profesional: -0.5/mes
 
-**Derrota compartida:** derrota humillante (3+ goles) -0.5 entre todos los pares. Descenso -3 entre todos.
+**Derrota compartida:** derrota humillante (3+ goles) -0.5 entre todos los pares. Relegación (fin de run) no aplica (la run termina).
 
-**Separación:** jugador cedido o vendido: -2/mes con excompañeros. Un año fuera = ~24 puntos perdidos.
+**Separación:** jugador no retenido o tradeado: -2/mes con excompañeros mientras estén en la liga. Un año separados = ~24 puntos perdidos.
 
-**Transferencia conflictiva:** jugador que pide traspaso o fuerza salida: -5 inmediato con TODOS. Si se le retiene contra su voluntad: -2/mes adicional.
+**Rechazo de retención:** jugador que rechaza la retención: -5 inmediato con TODOS (la traición de irse). Si usas blindaje de retención para forzarlo: -2/mes adicional (está contra su voluntad).
 
 ---
 
@@ -122,4 +122,4 @@ La pareja de centrales que sube de Desconocidos a Telepatía en 5 temporadas. Ve
 
 El fichaje estrella que llega con química 0. Los primeros meses es un crack aislado sin cartas combinadas; al final de temporada empieza a conectar.
 
-El conflicto Diva vs Líder nato que destruye la química de grupo de 55 a 35 en un mes. La temporada se descarrila hasta que se resuelve vendiendo a uno.
+El conflicto Diva vs Líder nato que destruye la química de grupo de 55 a 35 en un mes. La temporada se descarrila hasta que se resuelve no reteniendo a uno de los implicados o tradeando antes del draft.

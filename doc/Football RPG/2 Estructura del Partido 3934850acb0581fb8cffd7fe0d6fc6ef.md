@@ -49,7 +49,7 @@ Un **duelo** = un atacante juega carta + un defensor responde + se resuelve. Es 
 
 Un robo de balón **termina la posesión del atacante e inicia una posesión nueva** del que robó. Es un corte limpio.
 
-**Se activa el robo de cartas.** El equipo que robó saca 2 cartas de su sub-mazo de ataque + 1 del compartido (inicio de posesión atacante). El equipo que perdió el balón NO roba todavía (robará cuando empiece su siguiente posesión).
+**Se activa el robo de cartas.** Al cambiar la posesión, **ambos equipos roban a la vez**, cada uno según su nuevo rol. El que robó el balón (ahora atacante) saca **2 cartas de su sub-mazo de ataque + 1 del compartido**. El que perdió el balón (ahora defensor) saca **1 carta de su sub-mazo de defensa + 1 del compartido**. Ver sección 3 para por qué el robo es asimétrico (2 vs 1).
 
 **Los bonus de transición se aplican.** Si el estilo o instrucciones dan bonus por transición (Contragolpe: +3 primer eslabón; Transición letal: jugador rápido garantizado), se aplican ahora.
 
@@ -81,11 +81,28 @@ El mazo del equipo se divide en tres:
 
 **Mazo de defensa (~10-12 cartas):** Entradas, Intercepciones, Barridas, Técnicas especiales defensivas. Se roba de aquí cuando defiendes. Las cartas de Portero NO están en este mazo.
 
-**Set propio del portero:** El portero tiene un mini-set siempre disponible, separado de los sub-mazos. Una Parada básica está siempre jugable (no se roba del mazo). Las cartas superiores (Estirada, Blocaje, Despeje de puños, Achique) se añaden a su set según sus atributos y se regeneran entre posesiones. Esto evita el problema de robar cartas de portero cuando defiendes eslabones normales (no remates) y quedarte con cartas muertas en mano.
+**Set propio del portero:** El portero tiene un mini-set siempre disponible, separado de los sub-mazos. **No se roba de ningún mazo.** Se **regenera completo al inicio de cada posesión defensiva** de su equipo.
+
+La **Parada básica** (potencia 3) está siempre disponible y es de **uso ilimitado**. Las cartas superiores se añaden al set según los atributos del portero, y cada una puede usarse **una sola vez por posesión**:
+
+| Carta | Atributo | Umbral | Potencia | Usos por posesión |
+| --- | --- | --- | --- | --- |
+| Parada básica | — | siempre | 3 | ilimitados |
+| Blocaje | Handling | 13+ | 4 | 1 |
+| Despeje de puños | Aerial Reach | 15+ | 4 | 1 |
+| Estirada | Reflexes | 15+ | 5 | 1 |
+| Achique | One on Ones | 17+ | 6 | 1 |
+
+> **Por qué uso único por posesión.** En una posesión normal solo hay un remate, así que el límite no muerde. Solo importa en **rebotes**: tras un "gol con rebote" o un "paradón" seguido de segundo remate, el portero ya ha gastado su mejor carta y debe bajar de calidad. El segundo disparo es más peligroso que el primero — dramático y correcto.
+> 
+
+Esto evita el problema de robar cartas de portero cuando defiendes eslabones normales (no remates) y quedarte con cartas muertas en mano.
 
 **Mini-mazo compartido (~6-8 cartas):** Tácticas, Instantes, Arenga del capitán. Se roba 1 carta adicional de aquí en cada posesión (atacante o defensiva) si queda alguna.
 
 La mano es única y compartida entre fases (máximo 7 cartas). Las cartas ofensivas y defensivas conviven en la misma mano. Si al robar excedes 7, descartas a tu elección (lo descartado va al fondo de su sub-mazo correspondiente).
+
+**Destino de las cartas.** Una carta **jugada** sale del juego (no vuelve al mazo, no hay pila de descartes). Una carta **descartada** por exceso de mano o por mulligan vuelve **al fondo de su sub-mazo**. **Los sub-mazos nunca se rebarajan.** El agotamiento es una mecánica central del diseño, no un accidente a evitar.
 
 ## Sustituciones y cartas
 

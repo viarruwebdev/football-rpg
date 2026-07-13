@@ -89,6 +89,8 @@ pnpm sim                # harness de balance (N partidos IA-vs-IA)
 
 **Antes de dar una tarea por terminada**, un agente debe dejar en verde: `pnpm type`, `pnpm check`, `pnpm test`. Si el cambio toca reglas del juego, además `pnpm sim` no debe romper las bandas de calibración.
 
+**Al escribir código nuevo**, cumple las reglas de Biome (`biome.json`) desde el primer borrador — no dependas de `pnpm check --write` para limpiar warnings después. Evita en especial `noNonNullAssertion` (`!`): en `Record<K, V>` donde el dominio de `K` garantiza la clave, extrae la sub-colección a una variable local o usa un helper tipado en vez de indexar con `!` repetidamente. Un warning nuevo que "ya se arreglará en el check final" tiende a acumularse y a mezclarse con los preexistentes, hasta que nadie distingue cuáles son de esta tarea.
+
 ## 7. Estrategia de pruebas (TDD + BDD + property + harness)
 
 El motor puro hace esto barato. El orden de preferencia:
@@ -142,12 +144,16 @@ Este repo usa **GitHub Spec Kit**. El flujo por feature es:
 - No escribir código escrito en español. Todo el código va en inglés.
 - Cuando se derogue una regla del manual, buscar y eliminar sus copias en skills, specs, data-model y código — no solo en la fuente. Un dato derogado sobrevive en cada copia hasta que alguien la audita.
 - Un golden replay generado sobre código con un bug convierte el bug en el contrato. Antes de congelar snapshots, verifica que el comportamiento capturado es el que la spec exige — no solo que es reproducible. Al corregir un bug con goldens existentes: arregla primero, regenera después, y lee el diff del snapshot.
+- Un golden replay solo protege lo que incluye en su snapshot. El estado que muta en silencio (sin emitir eventos) es invisible a un golden que solo pinea eventos y resultado. Antes de confiar en un golden, verifica rompiendo el código que detecta la regresión que dices que cubre — un diff vacío puede significar "sin cambios" o "ciego al cambio".
 - Un test que nunca ha fallado contra el bug que dice cubrir no cubre nada. Al arreglar un bug, verifica que el test de regresión se pone rojo contra el código previo antes de darlo por bueno.
 - Una tabla de cobertura RF→tarea→test verifica que existe un test, no que prueba lo que dice. Un test puede estar mapeado al requisito correcto, tener el nombre correcto, pasar en verde, y no tocar el código que cubre. La única verificación real es romper el código a propósito y ver si el test falla.
 - `toBeDefined()` sobre expresiones que devuelven booleanos o arrays es tautológico y no puede fallar. Lo mismo una aserción encerrada en un `if` que puede no ejecutarse. Barre ambos patrones al revisar tests.
 - Un punto de extensión declarado en el tipo pero no consumido es una promesa incumplida. Documentarlo no basta: escribe un test de no-implementación que afirme el comportamiento actual. Cuando alguien lo cablee, el test romperá visiblemente y le obligará a actualizarlo a propósito, no en silencio.
 - `/analyze` verifica que existe un test por requisito, no que ese test toque el camino real. Un test puede llamar a una función pura que el orquestador nunca invoca. La única verificación es romper el código y ver si falla. Y si un test no cubre lo que su nombre dice, renómbralo — un test que miente sobre su cobertura es peor que no tenerlo.
 - Valida en la frontera y falla ruidosamente. Un filtro defensivo en el receptor convierte un contrato roto en comportamiento correcto y entierra el bug del llamador. Prefiere una aserción que grite a un filtro que calle. Aplica al motor entero, no solo al momentum.
+- En una feature de integración (la que conecta módulos existentes a un orquestador), escribe el test de punta a punta ANTES que los unitarios. Si primero verificas las piezas en aislamiento, pueden quedar correctas y sin cablear —y los verdes te dirán "hecho" sobre un orquestador que reimplementa o ignora las piezas. El test de integración primero hace imposible ese fallo.
+- Un placeholder para lógica de decisión diferida a otra feature debe ser neutral, no inteligente. Una política placeholder que introduce una estrategia concreta (siempre reconvertir, primera carta disponible) sesga toda métrica de balance medida sobre ella. Elige el comportamiento más obvio y sin táctica, y deja la decisión real como punto de extensión.
+- Un test que verifica una magnitud agregada (tamaño, conteo, total) es ciego al estado que muta por debajo de esa magnitud. Un set del tamaño correcto puede tener marcas de uso sin limpiar; una mano del tamaño correcto puede contener las cartas equivocadas. Para estado que se regenera o resetea, prueba el comportamiento observable tras el reset, no la forma del contenedor.
 
 ## 11. Referencias
 
